@@ -125,7 +125,8 @@ class QuestionFlowNodeResponsibleUsersForm(forms.Form):
                         is_active=True,
                         nodeuser__role__in=[
                             const.NODE_USER_ROLE_MEMBER,
-                            const.NODE_USER_ROLE_MANAGER
+                            const.NODE_USER_ROLE_MANAGER,
+                            const.NODE_USER_ROLE_DOCUMENT_MANAGER,
                         ]
                     )
                 )
