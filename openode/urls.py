@@ -52,6 +52,8 @@ APP_PATH = os.path.dirname(__file__)
 
 from openode import views
 
+from openode.rest_api import router
+
 
 urlpatterns = patterns('',
     url(r'^$', views.readers.index, name='index'),
@@ -70,6 +72,15 @@ urlpatterns = patterns('',
     ),
 
     (r'^search/', include('openode.search.urls')),
+
+    ############################################################################
+    # REST API
+    ############################################################################
+
+    url(r'^rest-api/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    ############################################################################
 
     url(r'^live/', views.live.live, name="live"),
 

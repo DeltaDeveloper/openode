@@ -215,7 +215,7 @@ INSTALLED_APPS = (
     'admin_tools.dashboard',
 
     'haystack',
-
+    "rest_framework",
 
     #all of these are needed for the openode
     'django.contrib.admin',
@@ -245,6 +245,14 @@ INSTALLED_APPS = (
     'openode.document',
     'rosetta',
 )
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 try:
     from settings_local import EXTRA_INSTALLED_APPS
