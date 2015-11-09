@@ -251,7 +251,10 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'PAGINATE_BY': 10,                 # Default to 10
+    'PAGINATE_BY_PARAM': 'page_size',  # Allow client to override
+    'MAX_PAGINATE_BY': 100             # Maximum limit allowed
 }
 
 try:

@@ -7,16 +7,6 @@ from openode.models import Node, Post
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'is_staff')  # perms, ...
-
-
-class ListNodeSerializer(serializers.ModelSerializer):
-    """
-    This serializer is used only for listing
-    """
-    class Meta:
-        model = Node
-        fields = ('title', 'parent', 'id')
 
 
 class DetailNodeSerializer(serializers.ModelSerializer):
@@ -26,7 +16,7 @@ class DetailNodeSerializer(serializers.ModelSerializer):
     questions = serializers.PrimaryKeyRelatedField(
         many=True, read_only=True, source='get_questions'
     )
-    
+
     documents = serializers.PrimaryKeyRelatedField(
         many=True, read_only=True, source='get_documents'
     )
@@ -37,7 +27,6 @@ class DetailNodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Node
-
 
 
 class QuestionSerializer(serializers.ModelSerializer):

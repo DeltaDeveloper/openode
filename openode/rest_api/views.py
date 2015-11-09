@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets
-from rest_framework.response import  Response
 
 from openode.models import Node, Post
 from openode.rest_api import serializers
@@ -13,13 +12,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class NodeViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.DetailNodeSerializer
-    queryset = Node.objects.all()
-
-    def list(self, request, *args, **kwargs):
-        queryset = Node.objects.all()
-        serializer = serializers.ListNodeSerializer(queryset, many=True)
-        return Response(serializer.data)
-
+    model = Node
 
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()  # TODO
