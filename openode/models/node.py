@@ -474,6 +474,21 @@ class Node(MPTTModel):
     def get_discussions_count(self):
         return self.get_threads_count(const.THREAD_TYPE_DISCUSSION)
 
+    def get_threads(self, thread_type):
+        return self.threads.filter(
+            thread_type=thread_type,
+            is_deleted=False,
+        )
+
+    def get_questions(self):
+        return self.get_threads(const.THREAD_TYPE_QUESTION)
+
+    def get_documents(self):
+        return self.get_threads(const.THREAD_TYPE_DOCUMENT)
+
+    def get_discussions(self):
+        return self.get_threads(const.THREAD_TYPE_DISCUSSION)
+
     def get_discussions_posts_count(self):
         try:
             d = self.threads.get(thread_type=const.THREAD_TYPE_DISCUSSION)
