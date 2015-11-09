@@ -7,6 +7,7 @@ from openode.models import Node, Post
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
+        exclude = ('password', )
 
 
 class DetailNodeSerializer(serializers.ModelSerializer):
