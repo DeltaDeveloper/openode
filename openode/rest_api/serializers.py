@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from openode.models import Node, Thread, Tag
+from openode.models.post import Post
 from openode.models.thread import ThreadCategory
 
 
@@ -61,7 +62,21 @@ class ThreadSerializer(serializers.ModelSerializer):
         )
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+
+
+class AnswerSerializer(serializers.ModelSerializer):
+    # comments = CommentSerializer(source='get_comments')
+    class Meta:
+        model = Post
+
+
 class QuestionSerializer(ThreadSerializer):
+    answers = AnswerSerializer(source='get_answers')
+    comments = CommentSerializer(source='get_comments')
+
     class Meta:
         model = Thread
         exclude = (
@@ -73,6 +88,7 @@ class QuestionSerializer(ThreadSerializer):
             'points',
             'external_access'
         )
+
 
 class DiscussionSerializer(ThreadSerializer):
     class Meta:
