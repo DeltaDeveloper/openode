@@ -1,17 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from openode.models import Node, Thread
+from openode.models import Node, Thread, Tag
 
-
-class TagListField(serializers.WritableField):
-    def from_native(self, data):
-        return data.split()
-
-    def to_native(self, obj):
-        if type(obj) is not list:
-            return [tag.name for tag in obj.all()]
-        return obj
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,8 +30,14 @@ class DetailNodeSerializer(serializers.ModelSerializer):
         model = Node
 
 
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('id','name')
+
 class ThreadSerializer(serializers.ModelSerializer):
-    tags = TagListField(source='tags')
+    tags = TagSerializer()
     description = serializers.CharField(source='description.text')
     author = serializers.CharField(source='description.author')
     summary = serializers.CharField(source='description.summary')
