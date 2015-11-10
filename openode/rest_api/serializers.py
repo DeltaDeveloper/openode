@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from openode.models import Node, Thread, Tag
+from openode.models.thread import ThreadCategory
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -30,11 +31,11 @@ class DetailNodeSerializer(serializers.ModelSerializer):
         model = Node
 
 
-
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ('id','name')
+
 
 class ThreadSerializer(serializers.ModelSerializer):
     tags = TagSerializer()
@@ -89,7 +90,13 @@ class DiscussionSerializer(ThreadSerializer):
         )
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ThreadCategory
+
+
 class DocumentSerializer(ThreadSerializer):
+    category = CategorySerializer()
     class Meta:
         model = Thread
         exclude = (
@@ -102,3 +109,4 @@ class DocumentSerializer(ThreadSerializer):
             'added_at',
             'points',
         )
+
