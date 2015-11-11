@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from openode.models import Node, Thread, Tag
 from openode.models.post import Post
-from openode.models.thread import ThreadCategory
+from openode.models.thread import (
+    ThreadCategory, AttachmentFileNode, AttachmentFileThread)
+from openode.models import Node, Thread, Tag
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -12,9 +13,15 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ('password', )
 
 
+class AttachmentFileNodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AttachmentFileNode
+        fields = ('file_data', )
+
+
 class DetailNodeSerializer(serializers.ModelSerializer):
     """
-    Detail serializer with unpacked data
+    Detailed serializer with unpacked data
     """
     questions = serializers.PrimaryKeyRelatedField(
         many=True, read_only=True, source='get_questions'
@@ -28,6 +35,8 @@ class DetailNodeSerializer(serializers.ModelSerializer):
         many=True, read_only=True, source='get_discussions'
     )
 
+    attachements = AttachmentFileNodeSerializer(source='attachment_files')
+
     class Meta:
         model = Node
 
@@ -35,12 +44,19 @@ class DetailNodeSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ('id','name')
+        fields = ('id', 'name')
+
+
+class AttachmentThreadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AttachmentFileThread
+        fields = ('file_data', )
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
+
 
 class PostSerializer(serializers.ModelSerializer):
     comments = CommentSerializer()
@@ -52,6 +68,7 @@ class ThreadSerializer(serializers.ModelSerializer):
     tags = TagSerializer()
     main_post = PostSerializer(source='_main_post')
     title = serializers.CharField(source='get_title')
+    attachements = AttachmentThreadSerializer(source='attachment_files')
 
     class Meta:
         model = Thread
@@ -109,6 +126,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class DocumentSerializer(ThreadSerializer):
     category = CategorySerializer()
+
     class Meta:
         model = Thread
         exclude = (
