@@ -89,6 +89,7 @@ class ThreadSerializer(serializers.ModelSerializer):
     title = serializers.CharField(source='get_title')
     attachements = AttachmentThreadSerializer(source='attachment_files')
     file_documents = FileDocumentSerializer(source='documents')
+    posts = PostSerializer()
 
 
     class Meta:
