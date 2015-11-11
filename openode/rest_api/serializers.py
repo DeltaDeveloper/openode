@@ -5,6 +5,7 @@ from openode.models.post import Post
 from openode.models.thread import (
     ThreadCategory, AttachmentFileNode, AttachmentFileThread)
 from openode.models import Node, Thread, Tag
+from openode.document.models import Document, DocumentRevision
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -64,11 +65,30 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
 
 
+class FileDocumentRevisionSerializer(serializers.ModelSerializer):
+    url = serializers.URLField(source='file_data.url')
+
+    class Meta:
+        model = DocumentRevision
+
+
+class FileDocumentSerializer(serializers.ModelSerializer):
+    url = serializers.URLField(source='get_file_url')
+    name = serializers.URLField(source='get_file_name')
+
+    revisions = FileDocumentRevisionSerializer(source='revisions')
+
+    class Meta:
+        model = Document
+
+
 class ThreadSerializer(serializers.ModelSerializer):
     tags = TagSerializer()
     main_post = PostSerializer(source='_main_post')
     title = serializers.CharField(source='get_title')
     attachements = AttachmentThreadSerializer(source='attachment_files')
+    file_documents = FileDocumentSerializer(source='documents')
+
 
     class Meta:
         model = Thread
