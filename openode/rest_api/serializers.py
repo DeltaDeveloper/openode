@@ -38,11 +38,19 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ('id','name')
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+
+class PostSerializer(serializers.ModelSerializer):
+    comments = CommentSerializer()
+    class Meta:
+        model = Post
+
+
 class ThreadSerializer(serializers.ModelSerializer):
     tags = TagSerializer()
-    description = serializers.CharField(source='description.text')
-    author = serializers.CharField(source='description.author')
-    summary = serializers.CharField(source='description.summary')
+    main_post = PostSerializer(source='_main_post')
     title = serializers.CharField(source='get_title')
 
     class Meta:
@@ -62,20 +70,8 @@ class ThreadSerializer(serializers.ModelSerializer):
         )
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-
-
-class AnswerSerializer(serializers.ModelSerializer):
-    # comments = CommentSerializer(source='get_comments')
-    class Meta:
-        model = Post
-
-
 class QuestionSerializer(ThreadSerializer):
-    answers = AnswerSerializer(source='get_answers')
-    comments = CommentSerializer(source='get_comments')
+    answers = PostSerializer(source='get_answers')
 
     class Meta:
         model = Thread
