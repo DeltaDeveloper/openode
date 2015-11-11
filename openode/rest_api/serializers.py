@@ -67,6 +67,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 class FileDocumentRevisionSerializer(serializers.ModelSerializer):
     url = serializers.URLField(source='file_data.url')
+    icon = serializers.URLField(source='get_icon')
 
     class Meta:
         model = DocumentRevision
