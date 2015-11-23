@@ -57,7 +57,7 @@ REQUIREMENTS = {
     "pyelasticsearch": "pyelasticsearch==0.5",
     "psi": "PSI==0.3b2",
     "nagios": "nagios-nsca==1.1.0",
-
+    "rest_framework": "djangorestframework==2.3.14",
 }
 
 # TODO remove feature Ask/Answer by email

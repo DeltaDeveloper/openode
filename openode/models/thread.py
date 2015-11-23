@@ -1025,6 +1025,9 @@ class Thread(models.Model):
             #                | models.Q(deleted_by=user)
             #            )
 
+    def get_comments(self):
+        return self.posts.get_comments()
+
     def invalidate_cached_thread_content_fragment(self):
         cache.cache.delete(self.SUMMARY_CACHE_KEY_TPL % (self.id, get_language()))
 
