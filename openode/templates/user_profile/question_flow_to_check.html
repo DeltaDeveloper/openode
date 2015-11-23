@@ -9,6 +9,10 @@
 {% endblock %}
 
 {% block usercontent %}
+
+    <div class='group panel-perex important'>
+        {% trans %}If you want to publish the answer must be marked as correct.{% endtrans %}
+    </div>
     {% if question_flow_to_check_answer_and_publish %}
         <table>
             {% for question in question_flow_to_check_answer_and_publish %}

@@ -38,7 +38,6 @@ def thread(request, node_id, node_slug, module, thread_id, thread_slug):
     """view that displays body of the question and
     all answers to it
     """
-
     node = get_object_or_404(Node, pk=node_id)
     thread = get_object_or_404(Thread, pk=thread_id, node=node)
 
@@ -295,12 +294,25 @@ def thread(request, node_id, node_slug, module, thread_id, thread_slug):
 
                     user = request.user
 
+                    if thread.node.is_question_flow_enabled:
+                        question_flow_state_original = thread.question_flow_state
+
+
                     answer = user.post_answer(
                         question=main_post,
                         body_text=text,
                         follow=follow,
                         timestamp=update_time,
                         )
+
+                    if thread.node.is_question_flow_enabled:
+                        if (answer.thread.question_flow_state == const.QUESTION_FLOW_STATE_ANSWERED) \
+                            and (question_flow_state_original != const.QUESTION_FLOW_STATE_ANSWERED):
+                            request.user.message_set.create(
+                                message=_(u"Your answer was sent to the club manager and will be published after approval.")
+                            )
+
+
                     return HttpResponseRedirect(answer.get_absolute_url())
                 except openode_exceptions.AnswerAlreadyGiven, e:
                     request.user.message_set.create(message=unicode(e))
