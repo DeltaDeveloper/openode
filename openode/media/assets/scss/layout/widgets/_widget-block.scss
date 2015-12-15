@@ -1,0 +1,18 @@
+// ==========================================================================
+// Title:        Widget Block
+// ==========================================================================
+
+.widget-block {
+    text-align: left;
+    margin-bottom: rem-calc(30);
+
+    .title {
+        font-size: rem-calc(24);
+        margin-bottom: rem-calc(10);
+    }
+
+    .gravatar-link {
+        @extend %gravatar;
+        margin: 0 rem-calc(10) rem-calc(10) 0;
+    }
+}

@@ -47,6 +47,27 @@
 
 {# ========================================================================== #}
 
+{%- macro tag_list_inline(tags, show_numbers=False) -%}
+    <ul class="tags" id="js-tags-list">
+        {% if tags %}
+            {% for tag in tags %}
+            <li class="inline">
+                {% if tag.pk %}
+                    <a class="tag tag-right" href="{% url "search" tags=tag.pk %}" data-tag_name="{{ tag.name }}">
+                        {{ tag.name|replace("_", " ") }}
+                        {% if show_numbers %} <span class='tag-number'>&#215; {{ tag.used_count }}</span>{% endif %}
+                    </a>
+                {% else %}
+                    <span class="tag">{{ tag.name|replace("_", " ") }}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+{%- endmacro -%}
+
+{# ========================================================================== #}
+
 {%- macro organization_link(organization, request_user, logo_size, logo_crop=False) -%}
     {%- if request_user.is_authenticated() -%}
         <a class="organization-name group-logo" href="{% url organization_detail organization.id, organization.title|replace('-', ' ')|slugify %}" title="{{ organization.full_title|escape }}">
@@ -537,8 +558,8 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
             </span>
         {% endtrans %}
     {% endif %}
-</span>   
-{% endif %} 
+</span>
+{% endif %}
 {%- endmacro %}
 
 {% macro render_closed_by_at(in_user, in_datetime) -%}

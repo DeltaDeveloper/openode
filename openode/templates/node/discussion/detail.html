@@ -71,10 +71,31 @@
 {% endif %}
 
 
-<div class="row">
-    <div class="six column">
-        <h2>{% trans %}Discussion{% endtrans %}</h2>
+<form action="{{ request.path }}" method="get" class="js-filter-users">
+    <div class="row">
+        <div class="medium-12 column">
+            <h3 class="node-title">{% trans %}Discussion{% endtrans %}</h3>
+            <div class="content-panel-filter">
+                <div class="filter-item no-m">
+                    <span class="form-label">
+                        {{ search_user_form.authors.label }}:
+                    </span>
+
+                    {{ search_user_form.authors }}
+                    <script type="text/javascript">
+                        jQuery(document).ready(function(){
+                            // select2 need this construction for call initSelection
+                            // some ugly select2 error?
+                            jQuery("#id_authors").select2("val", 0);
+                        });
+                    </script>
+                    
+                </div>
+            </div>
+        </div>
     </div>
+    </form>
+
     <div class="six column">
         <div class="group filter">
             <form action="{{ request.path }}" method="get" class="js-filter-users">
@@ -96,7 +117,6 @@
             </form>
         </div>
     </div>
-</div>
 
 
 {# <div id="post-id-{{main_post.id}}" class="question-content{% if main_post.deleted %} deleted{% endif %}"> #}
@@ -289,4 +309,3 @@
     {{ super() }}
     <link href="{{ "qtip/jquery.qtip.min.css"|media }}" rel="stylesheet" type="text/css" />
 {% endblock %}
-

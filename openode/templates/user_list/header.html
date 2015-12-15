@@ -1,0 +1,41 @@
+{# User List - Header #}
+
+<div class="content-panel-header">
+    <div class="filter-item no-m">
+        <span class="form-label">
+            {% trans %}Sort by:{% endtrans %}
+        </span>
+        <div class="filter button dropdown" data-dropdown="filter-sort">
+            {% if tab_id == 'newest' %}
+                {% trans %}recent{% endtrans %}
+            {% endif %}
+
+            {% if tab_id == 'last' %}
+                {% trans %}oldest{% endtrans %}
+            {% endif %}
+
+            {% if tab_id == 'last_name' %}
+                {% trans %}by last name{% endtrans %}
+            {% endif %}
+        </div>
+        <ul id="filter-sort" class="content-panel-dropdown f-dropdown" data-dropdown-content aria-hidden="true">
+            {% if tab_id != 'newest' %}
+                <li>
+                    <a href="{{ request.path }}?sort=newest" title="{% trans %}see people who joined most recently{% endtrans %}">{% trans %}recent{% endtrans %}</a>
+                </li>
+            {% endif %}
+
+            {% if tab_id != 'last' %}
+                <li>
+                    <a href="{{ request.path }}?sort=last" title="{% trans %}see people who joined the site first{% endtrans %}">{% trans %}oldest{% endtrans %}</a>
+                </li>
+            {% endif %}
+
+            {% if tab_id != 'last_name' %}
+                <li>
+                    <a href="{{ request.path }}?sort=last_name" title="{% trans %}see people sorted by name{% endtrans %}">{% trans %}last name{% endtrans %}</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

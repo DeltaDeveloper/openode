@@ -7,7 +7,7 @@
     padding: 0 $node-box-spacing;
 
     .inner {
-        padding: $node-box-spacing - $node-box-top-level-border-width 0;        
+        padding: $node-box-spacing - $node-box-top-level-border-width 0;
     }
 }
 
@@ -24,7 +24,7 @@
         font-size: rem-calc(18px);
         line-height: rem-calc(24px);
 
-        color: $text-color; 
+        color: $text-color;
         margin-bottom: rem-calc(5px);
     }
 
@@ -70,7 +70,6 @@
 .node-box-content {
     .node-title-link {
         display: inline-block;
-        
+
     }
 }
-

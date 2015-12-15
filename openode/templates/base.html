@@ -5,7 +5,7 @@
         <title>{% block title %}{% endblock %} | {{ settings.APP_TITLE|escape }}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="keywords" content="{%block keywords%}{%endblock%},{{ settings.APP_KEYWORDS|escape }}" />
-        <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Set the viewport width to device width for mobile -->
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% block meta_description %}
             <meta name="description" content="{{settings.APP_DESCRIPTION|escape}}" />
@@ -65,7 +65,7 @@
             <div class="inner-wrap">
                 {# === MOBILE TOP BAR === #}
                 {% include "components/mobile_top_bar.html" %}
-                
+
                 {# === MAIN WRAPPER === #}
                 <section class="main-section">
                     <div class="root">
@@ -81,7 +81,7 @@
 
                         {# === USER HEADER === #}
                         {% block header_user %}
-                            {% include "user_menu/user_menu_base.html" %}               
+                            {% include "user_menu/user_menu_base.html" %}
                         {% endblock %}
 
                         {# === BREADCRUMBS === #}

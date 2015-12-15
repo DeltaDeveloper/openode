@@ -1,5 +1,5 @@
 // ==========================================================================
-// Title:        Tabs 
+// Title:        Tabs
 // ==========================================================================
 
 
@@ -18,16 +18,16 @@
         position: relative;
         width: rem-calc(180px);
         height: rem-calc(56px);
-        float: left;   
+        float: left;
 
         background: $light-grey;
-        text-align: center;  
+        text-align: center;
 
         border-bottom: $global-border-width $global-border-style $global-border-color;
 
         & + li {
             border-left: $global-border-width $global-border-style $global-border-color;
-        }      
+        }
 
         &:first-child {
 			border-top-left-radius: $global-radius;
@@ -36,6 +36,26 @@
         &:last-child {
 			border-top-right-radius: $global-radius;
         }
+
+        @include desktop {
+            width: rem-calc(140px);
+        }
+
+        @include tablet {
+            width: rem-calc(100px);
+        };
+
+        @include phone {
+            width: rem-calc(75px);
+
+            .tab-title {
+                font-size: rem-calc(10px);
+            }
+
+            .tab-subtitle {
+                display: none;
+            }
+        };
     }
 
     & > li.active {
@@ -84,6 +104,3 @@
         font-weight: $font-weight-lighter;
     }
 }
-
-
-

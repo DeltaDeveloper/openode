@@ -23,25 +23,25 @@ $node-box-sub-level-border-color: $global-border-color !default;
 .node-box {
 
     /*&.category.level-0 {
-        background: $node-box-top-level-bg;        
+        background: $node-box-top-level-bg;
 
         a {
             color: $white;
         }
     }*/
 
-    background: $node-box-top-level-bg;        
+    background: $node-box-top-level-bg;
 
         a {
             color: $white;
         }
 
     // Generate styles Sub Levels
-    @include content-levels($minLevel: 0, 
-        $maxLevels: 10, 
+    @include content-levels($minLevel: 0,
+        $maxLevels: 10,
         $startFromLevel: 1,
-        $step: strip-unit(rem-to-px($node-box-spacing)), 
-        $levelSelector: '&.level', 
+        $step: strip-unit(rem-to-px($node-box-spacing)),
+        $levelSelector: '&.level',
         $contentSelector: '.node-box-content'
     ) {
         background: $node-box-sub-level-bg;
@@ -58,7 +58,7 @@ $node-box-sub-level-border-color: $global-border-color !default;
 
 .node.top-level {
 
-    border: $node-box-top-level-border-width $node-box-top-level-border-style $node-box-top-level-border-color; 
+    border: $node-box-top-level-border-width $node-box-top-level-border-style $node-box-top-level-border-color;
 
     .node-expand-control {
         border-color: $white !important;
@@ -82,7 +82,6 @@ $node-box-sub-level-border-color: $global-border-color !default;
         background: $node-box-top-level-bg;
         padding-left: $node-box-spacing;
     }
-
     // Private Node
     /*&.is-private {
         .node-box {
@@ -102,7 +101,7 @@ $node-box-sub-level-border-color: $global-border-color !default;
 
     // Anim expanding sub-levels
     transform: translateZ(0); // Safari fix
-    
+
     .node-box {
         @extend .animate-fast;
         @extend .zoomInY;
@@ -128,7 +127,7 @@ $node-box-sub-level-border-color: $global-border-color !default;
 
     // Anim expanding sub-levels
     transform: translateZ(0); // Safari fix
-    
+
     .node-box {
         @extend .animate-fast;
         @extend .zoomInY;
@@ -146,10 +145,12 @@ $node-box-sub-level-border-color: $global-border-color !default;
     }*/
 
     @extend %node-sub-style;
+
+
 }
 
 
+
+
+
 // NODE is category
-
-
-

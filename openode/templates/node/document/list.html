@@ -40,10 +40,22 @@
 {% endblock %}
 
 {% block module_content %}
-    <h2>{% trans %}Documents{% endtrans %}</h2>
+    <h3 class="node-title"><small>{% trans %}Documents{% endtrans %}</small></h3>
     {% if categories or free_threads %}
         <div id="question-list" class="files-list">
-
+            <div class="files-list-header">
+                <div class="inner">
+                    <div class="medium-7 columns">
+                        <span>Název souboru</span>
+                    </div>
+                    <div class="medium-5 columns">
+                        <div class="row">
+                            <div class="medium-3 medium-offset-3 columns"><span class="t-right">Zobr.</span></div>
+                            <div class="medium-6 columns"><span class="t-right">Poslední změna</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% for category in categories recursive %}
                 {% with cat_documents = category.threads.all().order_by("title") %}
                     {% if loop.first %}<ul>{% endif %}
@@ -52,7 +64,7 @@
                             {% if not category.is_leaf_node() or cat_documents %}
                                 <input disabled="disabled" type="checkbox" class="js-document-to-zip">
                                 <span
-                                        class="ico-type js-expander js-use-ajax js-closed folder-ico"
+                                        class="ico-type folder-name js-expander js-use-ajax js-closed folder-ico"
                                         data-url="{% url toggle_category %}?category_id={{ category.pk }}"
                                         data-element_id="{{ category.pk }}"
                                         data-close="▾"
@@ -111,10 +123,12 @@
                 {% endfor %}
             </dl>
         </div>
-        <form action="{% url download_as_zip node.pk, node.slug %}" method="post">{% csrf_token %}
-            <div class="hidden">{{ download_zip_form.documents_ids }}</div>
-            <input disabled="disabled" id="download-button" class="button small" type="submit" name="" value="{% trans %}Download selected{% endtrans %}">
-        </form>
+        <div class="files-list-footer">
+            <form action="{% url download_as_zip node.pk, node.slug %}" method="post">{% csrf_token %}
+                <div class="hidden">{{ download_zip_form.documents_ids }}</div>
+                <input disabled="disabled" id="download-button" class="button button-submit t-uppercase" type="submit" name="" value="{% trans %}Download selected{% endtrans %}">
+            </form>
+        </div>
     {% else %}
         <p>{% trans %}There are no Documents in this Node.{% endtrans %}</p>
     {% endif %}

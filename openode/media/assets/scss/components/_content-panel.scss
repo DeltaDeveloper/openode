@@ -2,12 +2,12 @@
 // Title:        Content Panel
 // ==========================================================================
 
- 
+
 // Variables
 $content-panel-padding: rem-calc(17px) !default;
-$content-panel-bg-color: $white !default; 
-$content-panel-header-bg-color: $tertiary-color !default; 
-$content-panel-header-font-size: rem-calc(12px) !default; 
+$content-panel-bg-color: $white !default;
+$content-panel-header-bg-color: $tertiary-color !default;
+$content-panel-header-font-size: rem-calc(12px) !default;
 
 
 .content-panel {
@@ -19,7 +19,7 @@ $content-panel-header-font-size: rem-calc(12px) !default;
 .content-panel-header {
     padding: $content-panel-padding;
     background: $content-panel-header-bg-color;
-    
+
     & > * {
         font-size: $content-panel-header-font-size;
     }
@@ -27,7 +27,7 @@ $content-panel-header-font-size: rem-calc(12px) !default;
     button,
     .button {
         margin: 0;
-    }  
+    }
 
     .content-panel-dropdown {
         padding: rem-calc(5px) rem-calc(15px);
@@ -36,7 +36,7 @@ $content-panel-header-font-size: rem-calc(12px) !default;
         li {
             font-size: $content-panel-header-font-size;
         }
-    }   
+    }
 }
 
 .content-panel-filter {
@@ -104,27 +104,21 @@ $content-panel-header-font-size: rem-calc(12px) !default;
 
 .content-panel-content {
     padding: $content-panel-padding;
-
-    .node-title {
-        font-size: rem-calc(30px);
-        line-height: rem-calc(36px);
-        color: $primary-color;
-    }
 }
 
 
 .content-panel-wrapper {
-    position: relative;    
+    position: relative;
     top: rem-calc(-5px); // for adjust horizontal line with other boxes
     margin-bottom: rem-calc(20px);
-    
+
     .title {
         text-transform: uppercase;
         font-size: rem-calc(24px);
         line-height: rem-calc(28px);
         margin-bottom: rem-calc(16px);
     }
-    .control-link {        
+    .control-link {
         font-size: rem-calc(12px);
         color: $link-color;
     }
@@ -133,6 +127,3 @@ $content-panel-header-font-size: rem-calc(12px) !default;
 .content-panel-dropdown {
     text-align: left;
 }
-
-
-

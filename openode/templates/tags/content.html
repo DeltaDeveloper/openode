@@ -1,0 +1,31 @@
+{# User List - Content #}
+
+{% from "macros.html" import tag_cloud, tag_list, tag_list_inline %}
+{% if tag_list_type == 'list' %}
+
+    {% if not tags.object_list %}
+        <span>{% trans %}Nothing found{% endtrans %}</span>
+    {% endif %}
+
+    {% if tags.object_list %}
+
+        {{ tag_list_inline(tags.object_list, show_numbers=True) }}
+
+        <hr />
+
+        <div class="pager clearfix">
+            {% with %}
+                {% set p = paginator_context %}
+                {% set position = 'left' %}
+                {% include "snippets/paginator.html" %}
+            {% endwith %}
+        </div>
+
+    {% endif %}
+{% else %}
+    <div class="clearfix"></div>
+    {% if not tags %}
+        <span>{% trans %}Nothing found{% endtrans %}</span>
+    {% endif %}
+    {{ tag_cloud(tags = tags, font_sizes = font_size, search_state = search_state) }}
+{% endif %}

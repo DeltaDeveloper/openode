@@ -1,0 +1,16 @@
+// ==========================================================================
+// Title:        Gravatars
+// ==========================================================================
+
+%gravatar {
+    display: inline-block;
+
+    img {
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.11);
+    }
+}
+
+.gravatar-link {
+    @extend %gravatar;
+}
