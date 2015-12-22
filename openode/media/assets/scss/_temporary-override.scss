@@ -92,3 +92,13 @@
 .nav-container {
 	display: none !important;
 }
+
+#signin-form label {
+	@include phone {
+		text-align: left !important;
+		margin: 0;
+	}
+}
+
+
+

@@ -36,13 +36,13 @@
     }
 
     .unread-mark {
-        position: absolute; 
+        position: absolute;
         top: rem-calc(-3px); right: 0;
         z-index: 1;
     }
 }
 
-@mixin apply-input-rules() {    
+@mixin apply-input-rules() {
     input[type="text"],
     input[type="password"],
     input[type="date"],
@@ -56,7 +56,7 @@
     input[type="tel"],
     input[type="time"],
     input[type="url"],
-    input[type="color"] { 
+    input[type="color"] {
         @content;
     }
 }
@@ -64,18 +64,18 @@
 .search-form {
     @include apply-input-rules {
         display: inline-block;
-        
+
 
         & + .button {
             margin-left: rem-calc(10px);
         }
-        
+
         @media #{$medium-up} {
             width: rem-calc(300px);
         }
 
         @media #{$mobile-and-tables} {
-            width: 100%;
+            width: 80%;
             margin-bottom: $global-spacing;
             padding-right: rem-calc(85px);
 
@@ -94,10 +94,6 @@
             }
         }
 
-        
+
     }
 }
-
-
-
-

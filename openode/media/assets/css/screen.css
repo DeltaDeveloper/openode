@@ -8791,7 +8791,7 @@ ul.pagination li {
       width: 18.75rem; } }
   @media only screen and (min-width:0em) and (max-width:64em) {
     .search-form input[type="text"], .search-form input[type="password"], .search-form input[type="date"], .search-form input[type="datetime"], .search-form input[type="datetime-local"], .search-form input[type="month"], .search-form input[type="week"], .search-form input[type="email"], .search-form input[type="number"], .search-form input[type="search"], .search-form input[type="tel"], .search-form input[type="time"], .search-form input[type="url"], .search-form input[type="color"] {
-      width: 100%;
+      width: 80%;
       margin-bottom: 1.0625rem;
       padding-right: 5.3125rem; }
       .search-form input[type="text"] + .button, .search-form input[type="password"] + .button, .search-form input[type="date"] + .button, .search-form input[type="datetime"] + .button, .search-form input[type="datetime-local"] + .button, .search-form input[type="month"] + .button, .search-form input[type="week"] + .button, .search-form input[type="email"] + .button, .search-form input[type="number"] + .button, .search-form input[type="search"] + .button, .search-form input[type="tel"] + .button, .search-form input[type="time"] + .button, .search-form input[type="url"] + .button, .search-form input[type="color"] + .button {
@@ -9292,6 +9292,9 @@ ul.pagination li {
     background: #516c8a;
     padding-left: 0.9375rem; }
 
+.node.top-level > .node-box.level-0 .node-meta-area .control-link {
+  color: #ffffff; }
+
 .node.sub-level, .node-thread {
   border-right-width: 0.0625rem;
   border-left-width: 0.0625rem;
@@ -9525,3 +9528,8 @@ ul.pagination li {
 
 .nav-container {
   display: none !important; }
+
+@media only screen and (max-width:40em) {
+  #signin-form label {
+    text-align: left !important;
+    margin: 0; } }

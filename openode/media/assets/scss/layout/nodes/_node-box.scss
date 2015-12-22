@@ -94,6 +94,10 @@ $node-box-sub-level-border-color: $global-border-color !default;
     }*/
 }
 
+.node.top-level > .node-box.level-0 .node-meta-area .control-link {
+    color: $white;
+}
+
 %node-sub-style {
     @include border-width(null $node-box-sub-level-border-width null $node-box-sub-level-border-width);
     @include border-style(null $node-box-sub-level-border-style null $node-box-sub-level-border-style);
