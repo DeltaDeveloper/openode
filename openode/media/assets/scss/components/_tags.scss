@@ -1,0 +1,39 @@
+// ==========================================================================
+// Title:        Tags
+// ==========================================================================
+
+.tags {
+    margin: 0;
+
+    li {
+        list-style: none;
+        margin-bottom: rem-calc(10);
+        display: inline-block;
+
+        @media #{$large-up} {
+            display: block;
+        }
+
+        &.inline { display: inline-block; }
+
+        &.inline a {
+            display: inline-block;
+        }
+    }
+}
+
+.tag {
+    font-size: rem-calc(12);
+    color: $primary-color;
+    text-transform: lowercase;
+    background: $tertiary-color;
+    padding: rem-calc(5) rem-calc(10);
+    border-radius: $global-radius;
+    @include reset-list;
+}
+
+.tag-number {
+    font-size: rem-calc(12);
+    color: #6e6e6e;
+    margin-left: rem-calc(5);
+}

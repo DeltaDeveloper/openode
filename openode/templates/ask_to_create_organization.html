@@ -1,7 +1,6 @@
 {% extends "one_column_body.html" %}
 {% from "macros.html" import node_breadcrumb %}
 
-
 {% block title %}{% trans %}Ask to create organization{% endtrans %}{% endblock %}
 
 {% block breadcrumbs %}
@@ -10,15 +9,35 @@
 
 
 {% block content %}
-    <h2 class="node">{% trans %}Organization{% endtrans %}{% trans %}:{% endtrans %}</h2>
-        {% if form.is_valid() %}
-            <h1>{% trans %}Your request to create new Organization was sent.{% endtrans %}</h1>
-        {% else %}
-            <p>{% trans %}You may ask Node manager to create a new Organization using form below.{% endtrans %}</p>
-            <form action="{% url ask_to_create_org %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form }}
-                <input type="submit" class="button success" value="{% trans %}Ask to create organization{% endtrans %}"/>
-            </form>
-        {% endif %}
+<div class="row">
+    <div class="small-12 columns">
+        <div class="content-panel-wrapper">
+
+            <div class="content-panel-control content-inline">
+                <h2 class="title left">
+                    {% trans %}Organization{% endtrans %}
+                </h2>
+            </div>
+
+            {% if form.is_valid() %}
+            <div class="content-panel disabled">
+                <div class="message">
+                    <span>{% trans %}Your request to create new Organization was sent.{% endtrans %}</span>
+                </div>
+            </div>
+            {% else %}
+            <div class="content-panel">
+                <div class="content-panel-content">
+                    <p>{% trans %}You may ask Node manager to create a new Organization using form below.{% endtrans %}</p>
+                    <form action="{% url ask_to_create_org %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form }}
+                        <input type="submit" class="button button-submit t-uppercase" value="{% trans %}Ask to create organization{% endtrans %}"/>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}

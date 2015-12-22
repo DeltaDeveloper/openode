@@ -1,0 +1,38 @@
+{# Organization List - Content #}
+
+{% for organization in organizations %}
+    {% set logo = organization.get_logo_url(50, True) %}
+
+    <div class="row">
+        {% if request.user.is_authenticated() %}
+            <div class="medium-3 columns">
+                <a class="organization-name group-logo" href="{% url organization_detail organization.id, organization.title|replace('-', ' ')|slugify %}" title="{{ organization.full_title|escape }}">
+                {% if logo %}
+                    <img src="{{ logo }}" class="organization-logo" alt="{{ organization.title|escape }}" />
+                {% else %}
+                    <img src="" class="organization-logo" alt="{{ organization.title|escape }}" />
+                {% endif %}
+                </a>
+            </div>
+            <div class="medium-9 columns">
+                <a class="organization-name group-logo" href="{% url organization_detail organization.id, organization.title|replace('-', ' ')|slugify %}" title="{{ organization.full_title|escape }}">
+                    {{ organization.title|escape }}
+                </a>
+            </div>
+        {% else %}
+            <div class="medium-3 columns">
+                <span class="organization-name group-logo">
+                    {% if logo %}
+                        <img src="{{ logo }}" class="organization-logo" alt="{{ organization.title|escape }}" />
+                    {% else %}
+                        {{ organization.title|escape }}
+                    {% endif %}
+                </span>
+            </div>
+            <div class="medium-9 columns">
+                {{ organization.title|escape }}
+            </div>
+        {% endif %}
+
+    </div>
+{% endfor %}

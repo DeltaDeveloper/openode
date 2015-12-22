@@ -1,0 +1,28 @@
+// ==========================================================================
+// Title:        Unread Mark
+// ==========================================================================
+
+.unread-mark {
+    display: inline-block;
+    text-align: center;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+
+    // modified
+    min-width: rem-calc(24px);
+    height: rem-calc(24px);
+    line-height: rem-calc(24px);
+    background: #ffcc00;
+    font-size: rem-calc(12px);
+    color: #000;    
+    padding: 0 rem-calc(7.15px) 0 rem-calc(7.15px);
+
+    &.small {
+        min-width: rem-calc(15px);
+        height: rem-calc(15px);
+        line-height: rem-calc(15px);
+        font-size: rem-calc(10px);
+        padding: 0 rem-calc(4px);
+    }
+}

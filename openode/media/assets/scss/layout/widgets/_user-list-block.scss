@@ -1,0 +1,17 @@
+// ==========================================================================
+// Title:        Widget User List
+// ==========================================================================
+
+.user-list-block {
+    .users-name {
+        @include text-limiter-base();
+
+        @include tablet {
+            max-width: rem-calc(130px);
+        }
+
+        @include desktop {
+            max-width: rem-calc(160px);
+        }
+    }
+}

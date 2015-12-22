@@ -1,0 +1,103 @@
+// ==========================================================================
+// Title:        User Menu
+// ==========================================================================
+
+.user-menu {
+    position: relative;
+    @include reset-list;
+    @include inline-list;
+    overflow: visible;
+
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+.user-menu > li {
+    margin-left: rem-calc(4);
+
+    &:first-child {
+        margin: 0;
+    }
+}
+
+.user-menu {
+    @media #{$mobile-and-tables} {
+
+    }
+}
+
+
+
+.user-menu .f-dropdown {
+    @extend .f-dropdown;
+
+    & > li {
+        position: relative;
+    }
+
+    .unread-mark {
+        position: absolute; 
+        top: rem-calc(-3px); right: 0;
+        z-index: 1;
+    }
+}
+
+@mixin apply-input-rules() {    
+    input[type="text"],
+    input[type="password"],
+    input[type="date"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"],
+    input[type="email"],
+    input[type="number"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="time"],
+    input[type="url"],
+    input[type="color"] { 
+        @content;
+    }
+}
+
+.search-form {
+    @include apply-input-rules {
+        display: inline-block;
+        
+
+        & + .button {
+            margin-left: rem-calc(10px);
+        }
+        
+        @media #{$medium-up} {
+            width: rem-calc(300px);
+        }
+
+        @media #{$mobile-and-tables} {
+            width: 100%;
+            margin-bottom: $global-spacing;
+            padding-right: rem-calc(85px);
+
+            & + .button {
+                position: absolute;
+                right: 0;
+                top: 0;
+                font-size: rem-calc(13px);
+                border-width: 0;
+                box-shadow: none;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                height: 33px;
+                margin-top: rem-calc($input-border-width);
+                margin-right: rem-calc($input-border-width);
+            }
+        }
+
+        
+    }
+}
+
+
+
+

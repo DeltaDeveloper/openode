@@ -8,56 +8,15 @@
 
 {% block module_content %}
 
-    {# === filter by author === #}
-    <div class="row">
-        <div class="six column">
-            <h2>{% trans %}Questions{% endtrans %}</h2>
-        </div>
-        <div class="six column">
-            <div class="group filter">
-                <form action="{{ request.path }}" method="get" class="js-filter-users">
-                    <dl class="sub-nav f-right">
-                        <dt>
-                            {{ search_user_form.authors.label }}:
-                        </dt>
-                        <dd>
-                            {{ search_user_form.authors }}
-                        </dd>
-                    </dl>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        load_selected = function(element, callback) {
-            var data = [];
-            {% for author in authors %}
-                data.push({
-                    id: {{ author.pk }},
-                    text: '{{ author.screen_name }}'
-                });
-            {% endfor %}
-            callback(data);
-        }
-
-        jQuery(document).ready(function(){
-            var form = jQuery(".js-filter-users");
-            form.on("change", "#id_authors", function(e){
-                jQuery("#id_authors").prop('readonly', true);
-                window.location.href = "?authors=" + jQuery("#id_authors").select2("val").join(",");
-            })
-        });
-    </script>
 
     {# ###################################################################### #}
 
     {% include "node/snippets/thread_sort.html" %}{# sorting #}
-    {% include "node/snippets/paginator.html" %}
+
     {% if threads.object_list|length == 0 %}
         <p>{% trans %}There are no questions in this Node.{% endtrans %}</p>
     {% else %}
-        <div class="group q-listing">
+        <div class="thread-listing">
             {% for thread in threads.object_list %}
                 {{ thread.get_summary_html(search_state=search_state, visitor=request.user) }}
             {% endfor %}
@@ -65,14 +24,6 @@
     {% endif %}
 
     {% include "node/snippets/paginator.html" %}
-
-    {% if request.user.has_openode_perm("node_qa_create", node) %}
-        <div class="group">
-            <a class="button large success t-left" title="" href="{% url thread_add node_id=node.pk, node_slug=node.slug, module='qa' %}">
-                {% trans %}Ask your question{% endtrans %}
-            </a>
-        </div>
-    {% endif %}
 
 {% endblock %}
 

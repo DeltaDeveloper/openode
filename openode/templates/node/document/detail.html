@@ -47,7 +47,7 @@
 {% block thread_content %}
 <div id="post-id-{{ main_post.id }}" class="{% if main_post.deleted %}deleted {% endif %}">
 
-    <h2>{{ thread.title|escape }}</h2>
+    <h3 class="node-title"><small>{{ thread.title|escape }}</small></h3>
 
     {% with html=main_post.html %}
         {% if html %}

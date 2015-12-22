@@ -1,5 +1,5 @@
 {% extends "one_column_body.html" %}
-{% from "macros.html" import render_user_infobox, tag_list %}
+{% from "macros.html" import render_user_infobox, render_user_infobox_news, tag_list %}
 
 {# for different search field on homepage #}
 {% set HOMEPAGE = True %}
@@ -27,13 +27,7 @@
 
 {% block forestyle %}
     {{ super() }}
-    <style type="text/css">
-        {% set step = 25 %}
-        {% set max_levels = 10 %}
-        {% for i in range(0, (max_levels * step) + step, step) %}
-            .level-{{ i // step }} .node-box-content {padding-left: {{ i }}px}
-        {% endfor %}
-    </style>
+
 {% endblock %}
 
 {# ========================================================================== #}
@@ -46,41 +40,180 @@
 
     <div class="row">
 
-        <div class="nine columns">
+        <div class="large-9 columns">
             {% if latest_actuality %}
-                <div class="row hp-news">
-                    <div class="twelve columns">
-                        <div class="f-right section-header-control">
-                            {% if request.user.is_admin('openode.add_actuality') %}
-                                <a href="{% url admin:openode_actuality_add %}" class="control-link">{% trans %}Add news{% endtrans %}</a>
-                            {% endif %}
-                            <a href="{% url archive %}" class="control-link">{% trans %}News archive{% endtrans %}</a>
-                        </div>
-                        <h2>{% trans %}News{% endtrans %}</h2>
-                        <div class="actuality">
-                            <div class="infobox-wrap">
-                                {{ render_user_infobox(latest_actuality.author, request.user, _('added'), latest_actuality.created) }}
+                <div class="row">
+                    <div class="small-12 columns">
+                        <div class="content-panel-wrapper">
+
+                            <div class="content-panel-control content-inline">
+                                <h2 class="title left">{% trans %}News{% endtrans %}</h2>
+                                <div class="control-area right">
+                                    {% if request.user.is_admin('openode.add_actuality') %}
+                                        <a href="{% url admin:openode_actuality_add %}" class="control-link">{% trans %}Add news{% endtrans %}</a>
+                                    {% endif %}
+                                    <a href="{% url archive %}" class="control-link">{% trans %}News archive{% endtrans %}</a>
+                                    {% if request.user.is_admin('openode.change_actuality') %}
+                                    <a class="control-link" href="{% url admin:openode_actuality_change latest_actuality.pk %}">
+                                        {% trans %}edit{% endtrans %}
+                                    </a>
+                                    {% endif %}
+                                </div>
                             </div>
-                            {{ latest_actuality.text }}
-                            {% if request.user.is_admin('openode.change_actuality') %}
-                                <ul class="post-controls group">
-                                    <li>
-                                        <a class="ico edit" href="{% url admin:openode_actuality_change latest_actuality.pk %}">
-                                            {% trans %}edit{% endtrans %}
-                                        </a>
-                                    </li>
-                                <ul>
-                            {% endif %}
+
+                            <div class="content-panel">
+                                <div class="content-panel-content">
+                                    {{ latest_actuality.text }}
+                                    <div class="content-panel-content-action">
+                                        {{ render_user_infobox_news(latest_actuality.author, request.user, _('added'), latest_actuality.created) }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <hr />
             {% endif %}
 
             <div class="row">
-                <div class="twelve columns">
-                    <div class="section-header no-top-margin">
+                <div class="small-12 columns">
+                    <div class="content-panel-wrapper">
 
+                        <div class="content-panel-control content-inline">
+                            <h2 class="title left">{% trans %}Nodes{% endtrans %}</h2>
+                            <div class="control-area right">
+                                {% if request.user.is_admin('openode.add_node') or request.user.is_admin('openode.change_node')%}
+                                    {% if request.user.is_admin('openode.change_node') %}
+                                        <a href="{% url admin:openode_node_changelist %}" class="control-link">
+                                            <i class="control-link-icon icon icon-plus round"></i>
+                                            <span class="control-link-content">
+                                                {% trans %}Edit node list{% endtrans %}
+                                            </span>
+                                        </a>
+                                    {% endif %}
+                                    {% if request.user.is_admin('openode.add_node') %}
+                                        <a href="{% url admin:openode_node_add %}" class="control-link">
+                                            <i class="control-link-icon icon icon-list round"></i>
+                                            <span class="control-link-content">
+                                                {% trans %}Add new node{% endtrans %}
+                                            </span>
+                                        </a>
+                                    {% endif %}
+                                {% elif request.user.is_authenticated() %}
+                                    <a href="{% url node_ask_to_create %}" class="control-link">
+                                        <i class="control-link-icon icon icon-check round"></i>
+                                        <span class="control-link-content">
+                                            {% trans %}Ask to create node{% endtrans %}
+                                        </span>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="content-panel">
+                            <div class="content-panel-header t-right">
+                                <span class="button-label">{% trans %}Show:{% endtrans %}</span>
+                                <div class="button dropdown" data-dropdown="node-display-mode">
+                                    {% if display_mode==DISPLAY_MODE_ACTIVE %}
+                                        {% trans %}active only{% endtrans %}
+                                    {% endif %}
+
+                                    {% if display_mode==DISPLAY_MODE_ACTIVE_AND_CLOSED %}
+                                        {% trans %}active and closed{% endtrans %}
+                                    {% endif %}
+                                </div>
+                                <ul id="node-display-mode" class="content-panel-dropdown f-dropdown" data-dropdown-content aria-hidden="true">
+                                    {% if display_mode==DISPLAY_MODE_ACTIVE %}
+                                    <li>
+                                        <a href="{{ request.path }}?dm={{ DISPLAY_MODE_ACTIVE_AND_CLOSED }}">{% trans %}active and closed{% endtrans %}</a>
+                                    </li>
+                                    {% endif %}
+
+                                    {% if display_mode==DISPLAY_MODE_ACTIVE_AND_CLOSED %}
+                                    <li>
+                                        <a href="{{ request.path }}?dm={{ DISPLAY_MODE_ACTIVE }}">{% trans %}active only{% endtrans %}</a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <div class="content-panel-content">
+                                {% with nodes_of_user = request.user %}
+                                {% for node in nodes recursive %}
+                                    {% if request.user.has_openode_perm("node_show", node) %}
+                                        {% set NODE_TREE_DISPLAY = True %}
+                                        {% set USE_AJAX = True %}
+
+                                        {% include "node/snippets/node_box.html" %}
+                                        {% if not node.is_leaf_node_for_user(request.user, with_closed) %}
+                                            {{ loop(node.get_children_for_user(request.user, with_closed)) }}
+                                        {% endif %}
+                                     {% endif %}
+                                {% endfor %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# DEFAULT CONTENT PANEL
+            <div class="row hidden">
+                <div class="small-12 columns">
+                    <div class="content-panel-wrapper">
+
+                        <div class="content-panel-control content-inline">
+                            <h2 class="title left">{% trans %}TESTOVACÍ PANEL{% endtrans %}</h2>
+                            <div class="control-area right">
+                                {% if request.user.is_admin('openode.add_node') or request.user.is_admin('openode.change_node')%}
+                                    {% if request.user.is_admin('openode.change_node') %}
+                                        <a href="{% url admin:openode_node_changelist %}" class="control-link">
+                                            <i class="control-link-icon icon icon-plus round"></i>
+                                            <span class="control-link-content">
+                                                {% trans %}Edit node list{% endtrans %}
+                                            </span>
+                                        </a>
+                                    {% endif %}
+                                    {% if request.user.is_admin('openode.add_node') %}
+                                        <a href="{% url admin:openode_node_add %}" class="control-link">
+                                            <i class="control-link-icon icon icon-list round"></i>
+                                            <span class="control-link-content">
+                                                {% trans %}Add new node{% endtrans %}
+                                            </span>
+                                        </a>
+                                    {% endif %}
+                                    <a href="{% url node_ask_to_create %}" class="control-link">
+                                        <i class="control-link-icon icon icon-check round"></i>
+                                        <span class="control-link-content">
+                                            {% trans %}Ask to create node{% endtrans %}
+                                        </span>
+                                    </a>
+                                {% elif request.user.is_authenticated() %}
+                                    <a href="{% url node_ask_to_create %}" class="control-link">{% trans %}Ask to create node{% endtrans %}</a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="content-panel">
+                            <div class="content-panel-header">
+                                <nav class="breadcrumbs" role="menubar" aria-label="breadcrumbs">
+                                    <li role="menuitem"><a href="#">Home</a></li>
+                                    <li role="menuitem"><a href="#">Features</a></li>
+                                    <li role="menuitem" role="button" aria-disabled="true"><a href="#">Gene Splicing</a></li>
+                                    <li role="menuitem" class="current"><a href="#">Cloning</a></li>
+                                </nav>
+                            </div>
+                            <div class="content-panel-content">
+                                <p>lorem</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            #}
+
+            {# PREVIUS STYLE FOR NODE list LAYOUT #}
+            <div class="row hidden">
+                <div class="small-12 columns">
+                    <div class="section-header no-top-margin">
                         <div class="f-right section-header-control">
                             {% if request.user.is_admin('openode.add_node') or request.user.is_admin('openode.change_node')%}
                                 {% if request.user.is_admin('openode.change_node') %}
@@ -144,15 +277,15 @@
             </div>
         </div>
 
-        <div class="column three aside">
+        <div class="large-3 columns">
             {% include "widgets/contributors.html" %}
 
             {# === tags === #}
-            <div class="block">
+            <div class="widget-block">
                 <h3 class="title">{% trans %}Tags{% endtrans %}</h3>
                 <div class="block-content">
                     {{ tag_list(tags, show_numbers=True) }}
-                    <p class="t-right">
+                    <p>
                         <a href="{% url tags %}" class="control-link">{% trans %}All tags{% endtrans%}</a>
                     </p>
                 </div>

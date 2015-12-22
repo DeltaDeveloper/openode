@@ -1,0 +1,15 @@
+// ==========================================================================
+// Title:        Node Base
+// ==========================================================================
+
+
+// Variables
+$node-item-spacing: $global-spacing !default;
+
+
+// Specs
+.node {
+     &.sub-level + &.top-level {
+        margin-top: $node-item-spacing;
+    }
+}

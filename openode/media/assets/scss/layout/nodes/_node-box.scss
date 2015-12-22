@@ -1,0 +1,156 @@
+// ==========================================================================
+// Title:        Node Box
+// ==========================================================================
+
+
+// Variables for spacing of 'Node Box'
+$node-box-spacing: rem-calc(15px) !default;
+$node-box-meta-spacing: rem-calc(5px) !default;
+
+// Variables for spacing of 'Top Level Node'
+$node-box-top-level-bg: $navy-blue !default;
+$node-box-top-level-border-width: $global-border-width*2 !default;
+$node-box-top-level-border-style: $global-border-style !default;
+$node-box-top-level-border-color: $node-box-top-level-bg !default;
+
+// Variables for spacing of 'Sub Level Node'
+$node-box-sub-level-bg: $white !default;
+$node-box-sub-level-border-width: $global-border-width !default;
+$node-box-sub-level-border-style: $global-border-style !default;
+$node-box-sub-level-border-color: $global-border-color !default;
+
+
+.node-box {
+
+    /*&.category.level-0 {
+        background: $node-box-top-level-bg;
+
+        a {
+            color: $white;
+        }
+    }*/
+
+    background: $node-box-top-level-bg;
+
+        a {
+            color: $white;
+        }
+
+    // Generate styles Sub Levels
+    @include content-levels($minLevel: 0,
+        $maxLevels: 10,
+        $startFromLevel: 1,
+        $step: strip-unit(rem-to-px($node-box-spacing)),
+        $levelSelector: '&.level',
+        $contentSelector: '.node-box-content'
+    ) {
+        background: $node-box-sub-level-bg;
+        /*@include border-width(null null $node-box-sub-level-border-width null);
+        @include border-style(null null $node-box-sub-level-border-style null);
+        @include border-color(null null $node-box-sub-level-border-color null);*/
+
+        .node-expand-control {
+            border: 1px solid $icon-color;
+        }
+    }
+}
+
+
+.node.top-level {
+
+    border: $node-box-top-level-border-width $node-box-top-level-border-style $node-box-top-level-border-color;
+
+    .node-expand-control {
+        border-color: $white !important;
+    }
+
+    // Anim expanding top-levels
+    transform: translateZ(0); // Safari fix
+
+    .node-box-content {
+        .node-title {
+            color: $white;
+        }
+        .report-meta-item {
+            &, & > a {
+                color: $white;
+            }
+        }
+    }
+
+    .level-0 .node-box-content {
+        background: $node-box-top-level-bg;
+        padding-left: $node-box-spacing;
+    }
+    // Private Node
+    /*&.is-private {
+        .node-box {
+            border: 1px solid $node-box-top-level-bg;
+        }
+
+        .node-expand-control {
+            border-color: $node-box-top-level-bg;
+        }
+    }*/
+}
+
+%node-sub-style {
+    @include border-width(null $node-box-sub-level-border-width null $node-box-sub-level-border-width);
+    @include border-style(null $node-box-sub-level-border-style null $node-box-sub-level-border-style);
+    @include border-color(null $node-box-sub-level-border-color null $node-box-sub-level-border-color);
+
+    // Anim expanding sub-levels
+    transform: translateZ(0); // Safari fix
+
+    .node-box {
+        @extend .animate-fast;
+        @extend .zoomInY;
+    }
+
+    .node-box-content .inner {
+        @include border-width(null null $node-box-sub-level-border-width null);
+        @include border-style(null null $node-box-sub-level-border-style null);
+        @include border-color(null null $node-box-sub-level-border-color null);
+    }
+
+    .node-box-content .node-title {
+        color: $primary-color;
+        font-weight: $font-weight-lighter;
+    }
+}
+
+
+.node.sub-level {
+    /*@include border-width(null $node-box-sub-level-border-width null $node-box-sub-level-border-width);
+    @include border-style(null $node-box-sub-level-border-style null $node-box-sub-level-border-style);
+    @include border-color(null $node-box-sub-level-border-color null $node-box-sub-level-border-color);
+
+    // Anim expanding sub-levels
+    transform: translateZ(0); // Safari fix
+
+    .node-box {
+        @extend .animate-fast;
+        @extend .zoomInY;
+    }
+
+    .node-box-content .inner {
+        @include border-width(null null $node-box-sub-level-border-width null);
+        @include border-style(null null $node-box-sub-level-border-style null);
+        @include border-color(null null $node-box-sub-level-border-color null);
+    }
+
+    .node-box-content .node-title {
+        color: $primary-color;
+        font-weight: $font-weight-lighter;
+    }*/
+
+    @extend %node-sub-style;
+
+
+}
+
+
+
+
+
+// NODE is category

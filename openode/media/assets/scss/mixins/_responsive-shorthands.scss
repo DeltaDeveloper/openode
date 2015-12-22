@@ -1,0 +1,39 @@
+// ==========================================================================
+// Title:        Responsive Shorthands
+// ==========================================================================
+
+@mixin desktop {
+    @media #{$large-up} {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media #{$medium-only} {
+        @content;
+    }
+}
+
+@mixin tablet-landscape {
+    @media #{$medium-only-landspace} {
+        @content;
+    }
+}
+
+@mixin phone {
+    @media #{$small-only} {
+        @content;
+    }
+}
+
+@mixin phone-and-tablet {
+    @media #{$small-and-medium} {
+        @content;
+    }
+}
+
+@mixin tablet-and-desktop {
+    @media #{$medium-up} {
+        @content;
+    }
+}

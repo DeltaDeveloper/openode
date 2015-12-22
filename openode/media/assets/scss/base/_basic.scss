@@ -1,0 +1,116 @@
+// ==========================================================================
+// Title:        Basic
+// ==========================================================================
+
+// ==========================================================================
+// =global
+// ==========================================================================
+
+
+body {
+    transform: translateZ(0); // Safari fix
+}
+
+a {
+    //color: #555555;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $primary-font;
+}
+
+h1 {
+
+    &.title {
+        margin: 0 0 5px;
+    }
+}
+
+h2 {
+
+    &.title {
+        margin: 0 0 15px;
+    }
+}
+
+h3 {
+
+    &.title {
+        margin: 0 0 10px;
+    }
+}
+
+h4 {
+
+    &.title {
+        margin: 0 0 10px;
+    }
+}
+
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #e8edee;
+}
+
+.text-normal {
+    font-weight: normal;
+}
+
+.spacing {
+    margin: $global-spacing;
+
+    &-top {
+        margin: 0;
+        margin-top: $global-spacing;
+    }
+    &-right {
+        margin: 0;
+        margin-right: $global-spacing;
+    }
+    &-bottom {
+        margin: 0;
+        margin-bottom: $global-spacing;
+    }
+    &-left {
+        margin: 0;
+        margin-left: $global-spacing;
+    }
+}
+
+
+// ==========================================================================
+// =layout
+// ==========================================================================
+
+h2 {
+    font-size: rem-calc(20);
+    font-weight: bold;
+}
+
+button.success, .button.success {
+    background: $primary-color;
+    border-color: none;
+    border-radius: 3px;
+    width: 100%;
+
+    @media #{$medium-up} {
+        width: auto;
+    }
+}
+
+// ==========================================================================
+// =modules
+// ==========================================================================
+
+/*@import "../modules/_base-top-navbar.scss";
+@import "../modules/_base-top-user-info.scss";
+@import "../modules/_hp-custom-content.scss";
+@import "../modules/_hp-news.scss";*/

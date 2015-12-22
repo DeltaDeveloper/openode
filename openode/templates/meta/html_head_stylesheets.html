@@ -3,7 +3,11 @@
 <link href="{{ "/colorbox/colorbox.css"|media }}" rel="stylesheet" type="text/css" />
 {{ skin.get_extra_css_link() }}
 <link href="{{ "/jquery-ui/jquery-ui.min.css"|media }}" rel="stylesheet" type="text/css" />
-<link href="{{ "/style/screen.css"|media }}" rel="stylesheet" type="text/css" />
+{% if settings.DEBUG %}
+<link href="{{ "/assets/css/screen.css"|media }}" rel="stylesheet" type="text/css" />
+{% else %}
+<link href="{{ "/assets/css/screen.min.css"|media }}" rel="stylesheet" type="text/css" />
+{% endif %}
 
 <style type="text/css">
     .vote-notification {

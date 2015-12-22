@@ -1,0 +1,24 @@
+{# User List - Content #}
+
+<div class="user-list-block">
+    {% for user in users.object_list %}
+        <div class="medium-3 columns">
+            <div class="user-block row t-center">
+                <div class="medium-12 columns">
+                    {{ render_gravatar(user, 64) }}
+                </div>
+                <div class="medium-12 columns">
+                    <a href="{% url user_profile user.id %}" class="users-name">{{ user.screen_name|escape }}</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<hr />
+<div class="pager clearfix">
+    {% with %}
+        {% set p = paginator_context %}
+        {% set position = 'left' %}
+        {% include "snippets/paginator.html" %}
+    {% endwith %}
+</div>
