@@ -1,0 +1,16 @@
+// ==========================================================================
+// Title:        WYSIWYG widget
+// ==========================================================================
+$widget_wysiwyg_spacing: $global-spacing !default;
+
+%widget-wysiwyg {
+    padding: $widget_wysiwyg_spacing;
+    background: #f5f5f5;
+
+    .action-area {
+        .button { margin:$widget_wysiwyg_spacing 0 0; }
+
+    }
+}
+
+.widget-wysiwyg { @extend %widget-wysiwyg; }

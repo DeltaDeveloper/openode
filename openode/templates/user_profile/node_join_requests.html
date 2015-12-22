@@ -9,6 +9,23 @@
 {% endblock %}
 
 {% block usercontent %}
+<div class="content-panel">
+    <div class="content-panel-header">
+        <nav class="breadcrumbs" role="menubar" aria-label="breadcrumbs">
+            {# first breadcrumb element #}
+            <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
+            <li>
+                {% if request.user.is_authenticated() %}
+                    <a href="{% url users %}">{% trans %}Users{% endtrans %}</a>
+                {% else %}
+                    <span>{% trans %}Users{% endtrans %}</span>
+                {% endif %}
+            </li>
+            <li><a href="{% url user_profile view_user.id %}">{{ view_user.screen_name|escape }}</a></li>
+            <li><span>{% trans %}Unresolved Node join requests{% endtrans %}</span></li>
+        </nav>
+    </div>
+    <div class="content-panel-content">
     {% if node_join_requests %}
         <table>
         {% for node_join_request in node_join_requests %}
@@ -54,4 +71,6 @@
     {% else %}
         <p>{% trans %}You have no unresolved requests.{% endtrans %}</p>
     {% endif %}
+    </div>
+</div>
 {% endblock %}

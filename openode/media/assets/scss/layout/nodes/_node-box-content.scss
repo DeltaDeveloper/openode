@@ -1,0 +1,75 @@
+// ==========================================================================
+// Title:        Node Box Content
+// ==========================================================================
+
+.node-box-content {
+    position: relative;
+    padding: 0 $node-box-spacing;
+
+    .inner {
+        padding: $node-box-spacing - $node-box-top-level-border-width 0;
+    }
+}
+
+.node-box-content {
+
+    &.has-expand-control .inner {
+        padding-right: $node-box-expand-control-size + $node-box-spacing;
+    }
+
+    .node-title {
+        position: relative;
+        margin: 0;
+
+        font-size: rem-calc(18px);
+        line-height: rem-calc(24px);
+
+        color: $text-color;
+        margin-bottom: rem-calc(5px);
+    }
+
+    .node-long-title {
+        display: none;
+
+        &, & > a {
+            font-size: rem-calc(14px);
+            font-weight: 300;
+            color: #999999;
+        }
+    }
+
+    .node-expand-area {
+        position: absolute;
+        top: rem-calc(22px);
+        right: rem-calc(20px);
+    }
+
+    .node-meta-area {
+        line-height: 1;
+
+        &.modules {
+            margin-bottom: rem-calc(9px);
+        }
+    }
+
+    .report-meta-area {
+        @extend %report-meta-area;
+
+        display: inline-block;
+    }
+
+    .report-meta-item {
+        @extend %report-meta-item;
+    }
+
+    .unread-mark {
+        padding: 0;
+    }
+}
+
+.node-box-content {
+    .node-title-link {
+        display: inline-block;
+
+    }
+}

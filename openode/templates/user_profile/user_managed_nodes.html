@@ -12,14 +12,33 @@
 
 
 {% block usercontent %}
-    <div class="q-listing">
-        {% with nodes_of_user = view_user %}
-        {% for node in managed_nodes %}
-            {% include "node/snippets/node_box.html" %}
-        {% else %}
-            <p>{% trans %}No records.{% endtrans %}</p>
-        {% endfor %}
-        {% endwith %}
+<div class="content-panel">
+    <div class="content-panel-header">
+        <nav class="breadcrumbs" role="menubar" aria-label="breadcrumbs">
+            {# first breadcrumb element #}
+            <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
+            <li>
+                {% if request.user.is_authenticated() %}
+                    <a href="{% url users %}">{% trans %}Users{% endtrans %}</a>
+                {% else %}
+                    <span>{% trans %}Users{% endtrans %}</span>
+                {% endif %}
+            </li>
+            <li><a href="{% url user_profile view_user.id %}">{{ view_user.screen_name|escape }}</a></li>
+            <li><span>{% trans %}Managed nodes{% endtrans %}</span></li>
+        </nav>
     </div>
-    <p class="t-right"><a href="{% url "node_mark_read" "node" %}">{% trans %}Mark all managed node read{% endtrans %}</a></p>
+    <div class="content-panel-content">
+        <div class="q-listing">
+            {% with nodes_of_user = view_user %}
+            {% for node in managed_nodes %}
+                {% include "node/snippets/node_box.html" %}
+            {% else %}
+                <p>{% trans %}No records.{% endtrans %}</p>
+            {% endfor %}
+            {% endwith %}
+        </div>
+        <p class="t-right"><a href="{% url "node_mark_read" "node" %}">{% trans %}Mark all managed node read{% endtrans %}</a></p>
+    </div>
+</div>
 {% endblock %}

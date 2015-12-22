@@ -1,0 +1,33 @@
+{# Organization List - Header #}
+
+{% if request.user.is_authenticated() %}
+<div class="content-panel-header">
+    <div class="filter-item no-m">
+        <span class="form-label">
+            {% trans %}Show:{% endtrans %}
+        </span>
+        <div class="filter button dropdown" data-dropdown="filter-sort">
+            {% if tab_name == 'my-organizations' %}
+                {% trans %}My organizations{% endtrans %}
+            {% endif %}
+
+            {% if tab_name == 'all-organizations' %}
+                {% trans %}All organizations{% endtrans %}
+            {% endif %}
+        </div>
+        <ul id="filter-sort" class="content-panel-dropdown f-dropdown" data-dropdown-content aria-hidden="true">
+            {% if tab_name != 'my-organizations' %}
+                <li>
+                    <a href="{% url organization_list %}?sort=my-organizations" title="{% trans %}Show my organizations{% endtrans %}">{% trans %}My organizations{% endtrans %}</a>
+                </li>
+            {% endif %}
+
+            {% if tab_name != 'all-organizations' %}
+                <li>
+                    <a href="{% url organization_list %}?sort=all-organizations" title="{% trans %}Show all organizations{% endtrans %}">{% trans %}All organizations{% endtrans %}</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endif %}

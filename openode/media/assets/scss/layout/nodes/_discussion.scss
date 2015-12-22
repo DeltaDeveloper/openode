@@ -1,0 +1,27 @@
+// ==========================================================================
+// Title:        Discussion
+// ==========================================================================
+
+// @mixin wrapClass($className) {
+//     .#{$className} {
+//         @content;
+//     }
+// }
+//
+// %discussion {
+//     .answer {
+//         padding-bottom: $global-spacing;
+//         border-bottom: 1px solid $global-border-color;
+//     }
+// }
+//
+// @include wrapClass('answers') {
+//     @extend %discussion;
+// };
+
+.answer {
+    padding-top: $global-spacing;
+    padding-bottom: $global-spacing;
+    border-bottom: 1px solid $global-border-color;
+
+}

@@ -1,51 +1,35 @@
-<div id="content-header">
+{# User List - Header #}
 
-    {% if page_title %}
-            <h1 class="section-title">{{ page_title }}</h1>
-    {% else %}
-        {% if stag %}
-            <h1 class="section-title">{% trans %}Tags, matching "{{ stag }}"{% endtrans %}</h1>
-        {% else %}
-            <h1 class="section-title">{% trans %}Tags{% endtrans %}</h1>
-        {% endif %}
-    {% endif %}
+<div class="content-panel-header">
+    <div class="filter-item no-m">
+        <span class="form-label">
+            {% trans %}Sort by:{% endtrans %}
+        </span>
+        <div class="filter button dropdown" data-dropdown="filter-sort">
+            {% if tab_id == 'name' %}
+                {% trans %}name{% endtrans %}
+            {% endif %}
 
-    <hr>
-
-    <div class="sort">
-        <dl id="sort_tabs" class="sub-nav">
-        {# <div class="tabBar tabBar-tags"> #}
-            {# <div class="tabsA"> #}
-
-                <dt>
-                    {% trans %}Sort by &raquo;{% endtrans %}
-                </dt>
-
-                <dd {% if tab_id == 'name' %}class="active"{% endif %}>
+            {% if tab_id == 'used' %}
+                {% trans %}popularity{% endtrans %}
+            {% endif %}
+        </div>
+        <ul id="filter-sort" class="content-panel-dropdown f-dropdown" data-dropdown-content aria-hidden="true">
+            {% if tab_id != 'name' %}
+                <li>
                     <a id="sort_name" href="{% url tags %}?sort=name" title="{% trans %}sorted alphabetically{% endtrans %}">
-                        <span>{% trans %}by name{% endtrans %}</span>
+                        {% trans %}by name{% endtrans %}
                     </a>
-                </dd>
+                </li>
+            {% endif %}
 
-                <dd {% if tab_id == 'used' %}class="active"{% endif %}>
+            {% if tab_id != 'used' %}
+                <li>
                     <a id="sort_used" href="{% url tags %}?sort=used" title="{% trans %}sorted by frequency of tag use{% endtrans %}">
-                        <span>{% trans %}by popularity{% endtrans %}</span>
+                        {% trans %}by popularity{% endtrans %}
                     </a>
-                </dd>
-
-                {% if settings.ENABLE_TAG_MODERATION %}
-                    {% if request.user.is_authenticated() and request.user.is_administrator_or_moderator() %}
-                        <dd>
-                            <a href="{% url list_suggested_tags %}" {% if tab_id == 'suggested' %}class="on"{% endif %} title="{% trans %}suggested{% endtrans %}">
-                                <span>{% trans %}suggested{% endtrans %}</span>
-                            </a>
-                        </dd>
-                    {% endif %}
-                {% endif %}
-
-            {# </div> #}
-        {# </div> #}
-        </dl>
+                </li>
+            {% endif %}
+        </ul>
     </div>
-
 </div>

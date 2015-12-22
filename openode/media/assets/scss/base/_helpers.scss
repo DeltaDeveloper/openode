@@ -1,0 +1,80 @@
+// ==========================================================================
+// Title:        Helpers
+// ==========================================================================
+
+// Visibility helper
+.hidden {
+    display: none;
+}
+.hidden-important {
+    display: none !important;
+}
+.invisible {
+    visibility: hidden;
+}
+.invisible-important {
+    visibility: hidden !important;
+}
+
+
+// Text helper
+.t-right {
+    text-align: right;
+}
+.t-left {
+    text-align: left;
+}
+.t-center {
+    text-align: center;
+}
+.t-uppercase {
+    text-transform: uppercase;
+}
+.t-uppercase-important {
+    text-transform: uppercase !important;
+}
+.t-bold {
+    font-weight: bold;
+}
+
+
+// Centering helper
+.centered-wrapper {
+    text-align: center;
+
+    &:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -0.25em; /* Adjusts for spacing */
+    }
+}
+.centered {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+// Group helper
+.group {
+    @include clearfix();
+}
+
+// Image align helper
+img.left {
+    margin-top: 1em;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+img.right {
+    margin-top: 1em;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+
+// Margin, Padding Helper
+.no-m {
+    margin: 0 !important;
+}

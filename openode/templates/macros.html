@@ -47,6 +47,27 @@
 
 {# ========================================================================== #}
 
+{%- macro tag_list_inline(tags, show_numbers=False) -%}
+    <ul class="tags" id="js-tags-list">
+        {% if tags %}
+            {% for tag in tags %}
+            <li class="inline">
+                {% if tag.pk %}
+                    <a class="tag tag-right" href="{% url "search" tags=tag.pk %}" data-tag_name="{{ tag.name }}">
+                        {{ tag.name|replace("_", " ") }}
+                        {% if show_numbers %} <span class='tag-number'>&#215; {{ tag.used_count }}</span>{% endif %}
+                    </a>
+                {% else %}
+                    <span class="tag">{{ tag.name|replace("_", " ") }}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+{%- endmacro -%}
+
+{# ========================================================================== #}
+
 {%- macro organization_link(organization, request_user, logo_size, logo_crop=False) -%}
     {%- if request_user.is_authenticated() -%}
         <a class="organization-name group-logo" href="{% url organization_detail organization.id, organization.title|replace('-', ' ')|slugify %}" title="{{ organization.full_title|escape }}">
@@ -262,42 +283,54 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
     </div>
 {%- endmacro %} #}
 {% macro render_user_infobox(user, request_user, label=None, timestamp=None) -%}
-    <div class="infobox">
-        <div class="top">
-            {{ label }}
-{#             {% if last_edited_at %}
-                {% trans %}updated{% endtrans %}
-            {% elif post.is_question() %}
-                {% trans %}asked{% endtrans %}
-            {% elif post.is_answer() %}
-                {% trans %}answered{% endtrans %}
-            {% else %}
-                {% trans %}posted{% endtrans %}
-            {% endif %}
- #}
-            <strong>
-                {{ timestamp|humanize_datetime }}
-{#                 {% if last_edited_at %}
-                    {{ last_edited_at|humanize_datetime }}
-                {% elif post.__class__.__name__ == 'PostRevision' %}
-                    {{ post.revised_at|humanize_datetime }}
-                {% else %}
-                    {{ post.added_at|humanize_datetime }}
-                {% endif %}
- #}
-             </strong>
-        </div>
 
-        <div class="group">
-            <a class="avatar" href="{{ user.get_profile_url() }}" title="{{ user.screen_name|escape }}" style="width:32px; height:32px;">
-                <img style="width:32px; height:32px;" height="32" width="32" src="{{ user.get_gravatar_url(32) }}" alt="" />
+
+    <div class="content-panel-control content-inline">
+        <div class="control-area right">
+
+            <span class="control-link" style="width:32px; height:32px;">
+                <img class="control-link-icon icon icon-list round" style="width:32px; height:32px;" height="32" width="32" src="" alt="" />
+                <span class="control-link-content">
+                    {{ timestamp|humanize_datetime }}
+                </span>
+            </span>
+
+            <a href="{{ user.get_profile_url() }}" title="{{ user.screen_name|escape }}" class="control-link avatar" style="width:32px; height:32px;">
+                <img class="control-link-icon icon icon-list round" style="width:32px; height:32px;" height="32" width="32" src="{{ user.get_gravatar_url(32) }}" alt="" />
+                <span class="control-link-content">
+                    {{ user_profile_link(user) }}
+                    {% for organization in user.get_organizations() %}
+                        {{ organization_link(organization, request_user, 16, logo_crop=True) }}
+                    {% endfor %}
+                </span>
             </a>
-            <div class="text">
-                {{ user_profile_link(user) }}
-                {% for organization in user.get_organizations() %}
-                    {{ organization_link(organization, request_user, 16, logo_crop=True) }}
-                {% endfor %}
-            </div>
+
+        </div>
+    </div>
+{%- endmacro %}
+
+{% macro render_user_infobox_news(user, request_user, label=None, timestamp=None) -%}
+
+
+    <div class="content-panel-control content-inline">
+        <div class="control-area right">
+
+            <span class="control-link has-photo" style="width:32px; height:32px;">
+                <span class="control-link-content">
+                    {{ timestamp|humanize_datetime }}
+                </span>
+            </span>
+
+            <a href="{{ user.get_profile_url() }}" title="{{ user.screen_name|escape }}" class="control-link avatar has-photo" style="width:32px; height:32px;">
+                <img class="control-link-icon icon icon-list round" style="width:32px; height:32px;" height="32" width="32" src="{{ user.get_gravatar_url(32) }}" alt="" />
+                <span class="control-link-content">
+                    {{ user.screen_name|escape }}
+                    {% for organization in user.get_organizations() %}
+                        {{ organization_link(organization, request_user, 16, logo_crop=True) }}
+                    {% endfor %}
+                </span>
+            </a>
+
         </div>
     </div>
 {%- endmacro %}
@@ -448,6 +481,9 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
         <div class="title">{{ box_title }}</div>
         <div class="block-content">
             {{ short_text|escape|linebreaks }}
+        </div>
+        <div class="block-content">
+
             {% if light_box_link_text and light_box_content_html != light_box_content_html_trans %}
                 <p><a href="#" title="{{ light_box_link_text|escape }}" class="show-more" data-content="more-content">{{ light_box_link_text|escape }}</a></p>
                 <div id="more-content" class="hidden">
@@ -484,52 +520,63 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
 {# ################################# #}
 
 {% macro render_formfield_row(field, labeltext="", helptext="") -%}
-    {% if field.field.widget.__class__.__name__ == 'CheckboxInput' %}
-        {% set is_checkbox=True %}
-    {% else %}
-        {% set is_checkbox=False %}
-    {% endif %}
-
-    {% if field.field.widget.__class__.__name__ == 'Wysiwyg' %}
-        {% set is_wysiwyg=True %}
-    {% else %}
-        {% set is_wysiwyg=False %}
-    {% endif %}
-
-    <div class="row">
-        <div class="three columns">
-            {% if not is_checkbox %}
-                <label class="label-tabular" for="id_{% if field.form.prefix %}{{ field.form.prefix }}-{% endif %}{{ field.name }}">{{ render_formfield_labeltext(field, labeltext=labeltext) }}</label>
-            {% endif %}
-        </div>
-        <div class="nine columns{% if is_wysiwyg and field.errors %} cke-error{% endif %}">
-            {% if is_checkbox %}
-                <label class="label-inline" for="id_{% if field.form.prefix %}{{ field.form.prefix }}-{% endif %}{{ field.name }}">{{ field }} {{ render_formfield_labeltext(field, labeltext=labeltext) }}</label>
-            {% else %}
-                {{ field }}
-            {% endif %}
-            {{ render_formfield_errors(field) }}
-            {{ render_formfield_helptext(field, helptext) }}
-            <div class="form-field-separator"></div>
-        </div>
+{% if field.field.widget.__class__.__name__ == 'CheckboxInput' %}
+    {% set is_checkbox=True %}
+{% else %}
+    {% set is_checkbox=False %}
+{% endif %}
+{% if field.field.widget.__class__.__name__ == 'Wysiwyg' %}
+    {% set is_wysiwyg=True %}
+{% else %}
+    {% set is_wysiwyg=False %}
+{% endif %}
+<div class="row">
+    <div class="large-3 columns label-wrap">
+        {% if not is_checkbox %}
+        <label class="label-tabular" for="id_{% if field.form.prefix %}{{ field.form.prefix }}-{% endif %}{{ field.name }}">{{ render_formfield_labeltext(field, labeltext=labeltext) }}</label>
+        {% endif %}
     </div>
+    <div class="large-9 columns input-wrap{% if is_wysiwyg and field.errors %} cke-error{% endif %}">
+        {% if is_checkbox %}
+        <label class="label-inline" for="id_{% if field.form.prefix %}{{ field.form.prefix }}-{% endif %}{{ field.name }}">{{ field }} {{ render_formfield_labeltext(field, labeltext=labeltext) }}</label>
+        {% else %}
+        {{ field }}
+        {% endif %}
+        {{ render_formfield_errors(field) }}
+        {{ render_formfield_helptext(field, helptext) }}
+        <div class="form-field-separator"></div>
+    </div>
+</div>
 {% endmacro %}
 
 {# ################################# #}
 
 {% macro render_last_changed(in_user, in_datetime, created_user=None, created_datetime=None) -%}
-<div class="group">
+{% if not created_user == None or not in_user == None %}
+<span class="report-meta-item">
     {% if created_user %}
-    <div class="createdate f-left">
-        {% trans user=created_user.screen_name|escape, datetime=created_datetime|humanize_datetime %}{{ datetime }} created by <strong>{{ user }}</strong>{% endtrans %}
-    </div>
+        {% trans user=created_user.screen_name|escape, datetime=created_datetime|humanize_datetime %}
+            <span class="meta-time">
+                {{ datetime }}
+            </span>
+            <span class="meta-user">
+                {{ user }}
+            </span>
+        {% endtrans %}
     {% endif %}
+
     {% if in_user %}
-    <div class="changedate f-right">
-        {% trans user=in_user.screen_name|escape, datetime=in_datetime|humanize_datetime %}{{ datetime }} changed by <strong>{{ user }}</strong>{% endtrans %}
-    </div>
+        {% trans user=in_user.screen_name|escape, datetime=in_datetime|humanize_datetime %}
+            <span class="meta-time">
+                {{ datetime }}
+            </span>
+            <span class="meta-user">
+                {{ user }}
+            </span>
+        {% endtrans %}
     {% endif %}
-</div>
+</span>
+{% endif %}
 {%- endmacro %}
 
 {% macro render_closed_by_at(in_user, in_datetime) -%}
@@ -554,6 +601,21 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
 {%- endmacro %}
 
 {% macro render_gravatar(user, size, show_link=True) -%}
+    {% if show_link %}
+        <a class="gravatar-link" style="width:{{size}}px; height:{{size}}px;" href="{{ user.get_absolute_url() }}">
+    {% endif %}
+        <img class="gravatar" style="width:{{size}}px; height:{{size}}px;"
+            width="{{size}}" height="{{size}}"
+            src="{{ user.get_avatar_url(size) }}"
+            title="{{user.screen_name|escape}}"
+            alt="{{user.screen_name|escape}}"
+        />
+    {% if show_link %}
+        </a>
+    {% endif %}
+{%- endmacro %}
+
+{% macro render_gravatar_card(user, size, show_link=True) -%}
     {% if show_link %}
         <a class="gravatar-link" style="width:{{size}}px; height:{{size}}px;" href="{{ user.get_absolute_url() }}">
     {% endif %}

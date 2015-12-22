@@ -9,25 +9,44 @@
 {% endblock %}
 
 {% block usercontent %}
-    <div class="q-listing">
-        {% for main_post in questions %}
-            {% with %}
-                {% set thread = main_post.thread %}
-                {% set has_unread_main_post = thread.has_unread_main_post_for_user(request.user) %}
-                {% set extra_class = 'narrow' %}
-                {% set search_state = search_state %}
-                {% set visitor = request.user %}
-                {% set thread_header = True %}
-                {% set thread_view = thread.get_thread_view(view_user) %}
-                {% set has_unread_posts = thread.has_unread_posts(thread_view, view_user) %}
-                {% include "widgets/thread_summary_question.html" %}
-            {% endwith %}
-        {% else %}
-            <p>{% trans %}No records.{% endtrans %}</p>
-        {% endfor %}
+<div class="content-panel">
+    <div class="content-panel-header">
+        <nav class="breadcrumbs" role="menubar" aria-label="breadcrumbs">
+            {# first breadcrumb element #}
+            <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
+            <li>
+                {% if request.user.is_authenticated() %}
+                    <a href="{% url users %}">{% trans %}Users{% endtrans %}</a>
+                {% else %}
+                    <span>{% trans %}Users{% endtrans %}</span>
+                {% endif %}
+            </li>
+            <li><a href="{% url user_profile view_user.id %}">{{ view_user.screen_name|escape }}</a></li>
+            <li><span>{% trans %}Followed questions{% endtrans %}</span></li>
+        </nav>
     </div>
+    <div class="content-panel-content">
+        <div class="q-listing">
+            {% for main_post in questions %}
+                {% with %}
+                    {% set thread = main_post.thread %}
+                    {% set has_unread_main_post = thread.has_unread_main_post_for_user(request.user) %}
+                    {% set extra_class = 'narrow' %}
+                    {% set search_state = search_state %}
+                    {% set visitor = request.user %}
+                    {% set thread_header = True %}
+                    {% set thread_view = thread.get_thread_view(view_user) %}
+                    {% set has_unread_posts = thread.has_unread_posts(thread_view, view_user) %}
+                    {% include "widgets/thread_summary_question.html" %}
+                {% endwith %}
+            {% else %}
+                <p>{% trans %}No records.{% endtrans %}</p>
+            {% endfor %}
+        </div>
 
-    {% if view_user == request.user and request.user.get_unread_followed_questions_count() %}
-        <p class="t-right"><a href="{% url "node_mark_read" "question" %}">{% trans %}Mark all read{% endtrans %}</a></p>
-    {% endif %}
+        {% if view_user == request.user and request.user.get_unread_followed_questions_count() %}
+            <p class="t-right"><a href="{% url "node_mark_read" "question" %}">{% trans %}Mark all read{% endtrans %}</a></p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
