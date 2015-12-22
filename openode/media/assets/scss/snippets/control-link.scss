@@ -10,6 +10,10 @@
     & + .control-link {
         padding-left: rem-calc(20px);
     }
+
+    &.has-photo .control-link-content {
+        top: 0;
+    }
 }
 
 a.control-link .control-link-content {

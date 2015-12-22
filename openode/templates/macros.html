@@ -289,7 +289,7 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
         <div class="control-area right">
 
             <span class="control-link" style="width:32px; height:32px;">
-                <img class="control-link-icon icon icon-list round" style="width:32px; height:32px;" height="32" width="32" src="{{ user.get_gravatar_url(32) }}" alt="" />
+                <img class="control-link-icon icon icon-list round" style="width:32px; height:32px;" height="32" width="32" src="" alt="" />
                 <span class="control-link-content">
                     {{ timestamp|humanize_datetime }}
                 </span>
@@ -299,6 +299,32 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
                 <img class="control-link-icon icon icon-list round" style="width:32px; height:32px;" height="32" width="32" src="{{ user.get_gravatar_url(32) }}" alt="" />
                 <span class="control-link-content">
                     {{ user_profile_link(user) }}
+                    {% for organization in user.get_organizations() %}
+                        {{ organization_link(organization, request_user, 16, logo_crop=True) }}
+                    {% endfor %}
+                </span>
+            </a>
+
+        </div>
+    </div>
+{%- endmacro %}
+
+{% macro render_user_infobox_news(user, request_user, label=None, timestamp=None) -%}
+
+
+    <div class="content-panel-control content-inline">
+        <div class="control-area right">
+
+            <span class="control-link has-photo" style="width:32px; height:32px;">
+                <span class="control-link-content">
+                    {{ timestamp|humanize_datetime }}
+                </span>
+            </span>
+
+            <a href="{{ user.get_profile_url() }}" title="{{ user.screen_name|escape }}" class="control-link avatar has-photo" style="width:32px; height:32px;">
+                <img class="control-link-icon icon icon-list round" style="width:32px; height:32px;" height="32" width="32" src="{{ user.get_gravatar_url(32) }}" alt="" />
+                <span class="control-link-content">
+                    {{ user.screen_name|escape }}
                     {% for organization in user.get_organizations() %}
                         {{ organization_link(organization, request_user, 16, logo_crop=True) }}
                     {% endfor %}
@@ -455,6 +481,9 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
         <div class="title">{{ box_title }}</div>
         <div class="block-content">
             {{ short_text|escape|linebreaks }}
+        </div>
+        <div class="block-content">
+
             {% if light_box_link_text and light_box_content_html != light_box_content_html_trans %}
                 <p><a href="#" title="{{ light_box_link_text|escape }}" class="show-more" data-content="more-content">{{ light_box_link_text|escape }}</a></p>
                 <div id="more-content" class="hidden">
@@ -570,6 +599,21 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
 {%- endmacro %}
 
 {% macro render_gravatar(user, size, show_link=True) -%}
+    {% if show_link %}
+        <a class="gravatar-link" style="width:{{size}}px; height:{{size}}px;" href="{{ user.get_absolute_url() }}">
+    {% endif %}
+        <img class="gravatar" style="width:{{size}}px; height:{{size}}px;"
+            width="{{size}}" height="{{size}}"
+            src="{{ user.get_avatar_url(size) }}"
+            title="{{user.screen_name|escape}}"
+            alt="{{user.screen_name|escape}}"
+        />
+    {% if show_link %}
+        </a>
+    {% endif %}
+{%- endmacro %}
+
+{% macro render_gravatar_card(user, size, show_link=True) -%}
     {% if show_link %}
         <a class="gravatar-link" style="width:{{size}}px; height:{{size}}px;" href="{{ user.get_absolute_url() }}">
     {% endif %}

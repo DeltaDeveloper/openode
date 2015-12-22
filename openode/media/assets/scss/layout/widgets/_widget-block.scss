@@ -16,3 +16,60 @@
         margin: 0 rem-calc(10) rem-calc(10) 0;
     }
 }
+
+.widget-sidebar {
+    @extend .widget-block;
+
+    &.node-sidebar {
+        position: relative;
+        top: -9px;
+    }
+
+    p {
+        font-size: rem-calc(13px);
+        color: #505050;
+    }
+
+    a {
+        text-decoration: underline;
+        font-size: rem-calc(13px);
+    }
+
+    .block-content {
+        p:not(:last-child) {
+            border-bottom: 1px solid $global-border-color;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+    }
+
+    table {
+        width: 100%;
+        background: transparent;
+        border: none;
+
+        tbody {
+            tr {
+                th, td {
+                    padding: $global-spacing/2 0;
+                    font-size: rem-calc(13px);
+                    color: #505050;
+                }
+
+                th + td {
+                    padding-left: $global-spacing/2;
+                }
+            }
+            tr:not(:last-child) {
+                th, td {
+                    border-bottom: 1px solid $global-border-color;
+                }
+            }
+            tr:nth-of-type(even) {
+                background: transparent; 
+            }
+        }
+    }
+}

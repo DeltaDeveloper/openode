@@ -17,7 +17,7 @@
     <div class="row">
         <div class="medium-9 columns">
             <div class="content-panel-wrapper">
-              
+
                 <div class="content-panel-control content-inline">
                     <h2 class="title left">{% trans %}Node{% endtrans %}</h2>
                     <div class="control-area right">
@@ -44,18 +44,18 @@
                             <span class="control-link-content">
                                 {% trans %}Follow node{% endtrans %}
                             </span>
-                        </a>  
+                        </a>
                         {% else %}
                         <a href="#" class="control-link" id="id_node_unfollow" title="{% if node.user_is_manager(request.user) %}{% trans %}You cannot unfollow this club, because you are manager{% endtrans %}{% else %}{% trans %}click to unfollow this node{% endtrans %}{% endif %}">
                             <i class="control-link-icon icon icon-check round"></i>
                             <span class="control-link-content">
                                 {% trans %}Unfollow node{% endtrans %}
                             </span>
-                        </a>  
+                        </a>
                         {% endif %}
-                    </div>                          
-                </div>   
-           
+                    </div>
+                </div>
+
                 <div class="content-panel">
                     <div class="content-panel-header">
                         <nav class="breadcrumbs" role="menubar" aria-label="breadcrumbs">
@@ -68,7 +68,7 @@
                     <div class="content-panel-content">
                         <h3 class="node-title">
                             {{ node.full_title() }}
-                        </h3>                        
+                        </h3>
                     </div>
                     <div class="content-panel-tabs">
                         <nav class="tabs-wrapper">
@@ -160,7 +160,7 @@
                                             {% trans count = node.get_threads_count_for_module(NODE_MODULE_LIBRARY) %}{{ count }} item{% pluralize %}{{ count }} items{% endtrans %}
                                         </div>
                                         {% endif %}
-                                        
+
                                         {% if user and user.is_authenticated() and (unread > 0) %}
                                             <div class="tab-unread-mark">{{ unread }}</div>
                                         {% endif %}
@@ -176,7 +176,7 @@
                 </div>
             </div>
         </div>
-        <div class="medium-3 columns">
+        <div class="medium-3 columns widget-sidebar node-sidebar">
             {% block sidebar %}{% endblock %}
         </div>
     </div>
@@ -346,11 +346,11 @@
         <div class="row tab-content">
             <h1>tab content</h1>
             <div class="nine columns">
-                {# === CONTENT === 
+                {# === CONTENT ===
                 {% block content %}{% endblock %}#}
             </div>
             <div class="three columns aside">
-                {# === SIDEBAR === 
+                {# === SIDEBAR ===
                 {% block sidebar %}{% endblock %}#}
             </div>
         </div>
