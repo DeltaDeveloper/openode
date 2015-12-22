@@ -35,8 +35,6 @@ build/Release
 node_modules
 
 # Compiled CSS files
-css/*.css
-css/*.css.map
 
 # Config.json
 config.json
