@@ -1,5 +1,5 @@
 {% extends "one_column_body.html" %}
-{% from "macros.html" import render_user_infobox, tag_list %}
+{% from "macros.html" import render_user_infobox, render_user_infobox_news, tag_list %}
 
 {# for different search field on homepage #}
 {% set HOMEPAGE = True %}
@@ -42,51 +42,31 @@
 
         <div class="large-9 columns">
             {% if latest_actuality %}
-                <div class="row hp-news t-left">
-                    <div class="small-12 columns">
-                        <div class="section-header-control">
-                            {% if request.user.is_admin('openode.add_actuality') %}
-                                <a href="{% url admin:openode_actuality_add %}" class="control-link">{% trans %}Add news{% endtrans %}</a>
-                            {% endif %}
-                            <a href="{% url archive %}" class="control-link">{% trans %}News archive{% endtrans %}</a>
-                        </div>
-                        <h2>{% trans %}News{% endtrans %}</h2>
-                        <div class="actuality row">
-                            <div class="infobox-wrap medium-4 columns medium-push-8">
-                                {{ render_user_infobox(latest_actuality.author, request.user, _('added'), latest_actuality.created) }}
-                            </div>
-                            <div class="news-text-wrap medium-8 columns medium-pull-4">
-                                {{ latest_actuality.text }}
-                            </div>
-                            {% if request.user.is_admin('openode.change_actuality') %}
-                                <ul class="post-controls group">
-                                    <li>
-                                        <a class="ico edit" href="{% url admin:openode_actuality_change latest_actuality.pk %}">
-                                            {% trans %}edit{% endtrans %}
-                                        </a>
-                                    </li>
-                                <ul>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="small-12 columns">
                         <div class="content-panel-wrapper">
-                      
+
                             <div class="content-panel-control content-inline">
                                 <h2 class="title left">{% trans %}News{% endtrans %}</h2>
                                 <div class="control-area right">
                                     {% if request.user.is_admin('openode.add_actuality') %}
                                         <a href="{% url admin:openode_actuality_add %}" class="control-link">{% trans %}Add news{% endtrans %}</a>
-                                        <a href="{% url archive %}" class="control-link">{% trans %}News archive{% endtrans %}</a>
                                     {% endif %}
-                                </div>                          
-                            </div>   
-                       
+                                    <a href="{% url archive %}" class="control-link">{% trans %}News archive{% endtrans %}</a>
+                                    {% if request.user.is_admin('openode.change_actuality') %}
+                                    <a class="control-link" href="{% url admin:openode_actuality_change latest_actuality.pk %}">
+                                        {% trans %}edit{% endtrans %}
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+
                             <div class="content-panel">
                                 <div class="content-panel-content">
-                                    
+                                    {{ latest_actuality.text }}
+                                    <div class="content-panel-content-action">
+                                        {{ render_user_infobox_news(latest_actuality.author, request.user, _('added'), latest_actuality.created) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +77,7 @@
             <div class="row">
                 <div class="small-12 columns">
                     <div class="content-panel-wrapper">
-                      
+
                         <div class="content-panel-control content-inline">
                             <h2 class="title left">{% trans %}Nodes{% endtrans %}</h2>
                             <div class="control-area right">
@@ -117,7 +97,7 @@
                                                 {% trans %}Add new node{% endtrans %}
                                             </span>
                                         </a>
-                                    {% endif %}                                    
+                                    {% endif %}
                                 {% elif request.user.is_authenticated() %}
                                     <a href="{% url node_ask_to_create %}" class="control-link">
                                         <i class="control-link-icon icon icon-check round"></i>
@@ -125,10 +105,10 @@
                                             {% trans %}Ask to create node{% endtrans %}
                                         </span>
                                     </a>
-                                {% endif %}  
-                            </div>                          
-                        </div>   
-                   
+                                {% endif %}
+                            </div>
+                        </div>
+
                         <div class="content-panel">
                             <div class="content-panel-header t-right">
                                 <span class="button-label">{% trans %}Show:{% endtrans %}</span>
@@ -149,7 +129,7 @@
                                     {% endif %}
 
                                     {% if display_mode==DISPLAY_MODE_ACTIVE_AND_CLOSED %}
-                                    <li>                                            
+                                    <li>
                                         <a href="{{ request.path }}?dm={{ DISPLAY_MODE_ACTIVE }}">{% trans %}active only{% endtrans %}</a>
                                     </li>
                                     {% endif %}
@@ -175,11 +155,11 @@
                 </div>
             </div>
 
-            {# DEFAULT CONTENT PANEL #}
-            <div class="row">
+            {# DEFAULT CONTENT PANEL
+            <div class="row hidden">
                 <div class="small-12 columns">
                     <div class="content-panel-wrapper">
-                      
+
                         <div class="content-panel-control content-inline">
                             <h2 class="title left">{% trans %}TESTOVACÍ PANEL{% endtrans %}</h2>
                             <div class="control-area right">
@@ -208,10 +188,10 @@
                                     </a>
                                 {% elif request.user.is_authenticated() %}
                                     <a href="{% url node_ask_to_create %}" class="control-link">{% trans %}Ask to create node{% endtrans %}</a>
-                                {% endif %}  
-                            </div>                          
-                        </div>   
-                   
+                                {% endif %}
+                            </div>
+                        </div>
+
                         <div class="content-panel">
                             <div class="content-panel-header">
                                 <nav class="breadcrumbs" role="menubar" aria-label="breadcrumbs">
@@ -228,6 +208,7 @@
                     </div>
                 </div>
             </div>
+            #}
 
             {# PREVIUS STYLE FOR NODE list LAYOUT #}
             <div class="row hidden">

@@ -45,23 +45,21 @@
             <div class="title">{{ sidebar_tools_title }}</div>
             <div class="block-content">
                 {% if module != NODE_MODULE_LIBRARY %}
-                    <p>
-                        <button class="button small success" id="id_thread_follow" title="{% trans %}click to follow this question{% endtrans %}" {% if thread.is_followed_by(user) %}style="display: none"{% endif %}>
-                            {% if module == NODE_MODULE_FORUM %}
-                                {% trans %}Follow this Discussion{% endtrans %}
-                            {% else %}
-                                {% trans %}Follow this Question{% endtrans %}
-                            {% endif %}
-                        </button>
+                <button class="button button-submit" id="id_thread_follow" title="{% trans %}click to follow this question{% endtrans %}" {% if thread.is_followed_by(user) %}style="display: none"{% endif %}>
+                    {% if module == NODE_MODULE_FORUM %}
+                        {% trans %}Follow this Discussion{% endtrans %}
+                    {% else %}
+                        {% trans %}Follow this Question{% endtrans %}
+                    {% endif %}
+                </button>
 
-                        <button class="button small secondary" id="id_thread_unfollow" title="{% trans %}click to unfollow this question{% endtrans %}" {% if not thread.is_followed_by(user) %}style="display: none"{% endif %}>
-                            {% if module == NODE_MODULE_FORUM %}
-                                {% trans %}Unollow this Discussion{% endtrans %}
-                            {% else %}
-                                {% trans %}Unfollow this Question{% endtrans %}
-                            {% endif %}
-                        </button>
-                    </p>
+                <button class="button button-submit" id="id_thread_unfollow" title="{% trans %}click to unfollow this question{% endtrans %}" {% if not thread.is_followed_by(user) %}style="display: none"{% endif %}>
+                    {% if module == NODE_MODULE_FORUM %}
+                        {% trans %}Unollow this Discussion{% endtrans %}
+                    {% else %}
+                        {% trans %}Unfollow this Question{% endtrans %}
+                    {% endif %}
+                </button>
 {#                     <p>
                         <label for="id_thread_subscribe">
                             <input type="checkbox" id="id_thread_subscribe" {% if thread.is_subscribed_by(request.user) %} checked="checked" {% endif %} />
