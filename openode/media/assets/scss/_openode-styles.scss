@@ -43,6 +43,7 @@
 @import "components/breadcrumbs";
 @import "components/tabs";
 @import "components/tags";
+@import "components/pagination";
 
 
 @import "layout/content-body";
@@ -54,9 +55,10 @@
 @import "layout/homepage/news";
 @import "layout/widgets/widget-block";
 @import "layout/widgets/user-list-block";
+@import "layout/widgets/wysiwyg";
 
 
-@import "layout/content-panel"; // @override of content-panel
+@import "layout/content-panel"; // @override of component => content-panel
 @import "layout/nodes/node-base";
 @import "layout/nodes/node-box-areas";
 @import "layout/nodes/node-expand-control";
@@ -65,6 +67,7 @@
 @import "layout/nodes/node-listings";
 @import "layout/nodes/threads";
 @import "layout/nodes/documents";
+@import "layout/nodes/discussion";
 @import "layout/nodes/commons";
 
 

@@ -1,3 +1,81 @@
+<div class="content-panel-control content-inline">
+    <div class="control-area right">
+
+        {# === LINK === #}
+        <a href="{{ answer.get_absolute_url(question_post=question) }}" title="{% trans %}permanent link{% endtrans %}" class="control-link">
+            <i class="control-link-icon icon icon-list round"></i>
+            <span class="control-link-content">
+                {% trans %}link{% endtrans %}
+            </span>
+        </a>
+
+        {# === EDIT === #}
+        {% if answer.has_edit_perm(request.user) %}
+            <a href="{% url edit_answer answer.id %}" title="{% trans %}permanent link{% endtrans %}" class="control-link" id='post-{{answer.id}}-edit'>
+                <i class="control-link-icon icon icon-list round"></i>
+                <span class="control-link-content">
+                    {% trans %}edit{% endtrans %}
+                </span>
+            </a>
+        {% endif %}
+
+        {# === UN/DELETE === #}
+        {% if answer.has_delete_perm(request.user) %}
+            <a href="{% url edit_answer answer.id %}" title="{% trans %}permanent link{% endtrans %}" class="control-link" id='post-{{ answer.id }}-delete'>
+                <i class="control-link-icon icon icon-list round"></i>
+                <span class="control-link-content">
+                    {% if answer.deleted %}
+                        {% trans %}undelete{% endtrans %}
+                    {% else %}
+                        {% trans %}delete{% endtrans %}
+                    {% endif %}
+                </span>
+            </a>
+        {% endif %}
+
+        {# === FLAG OFFENSIVE === #}
+        {% if settings.ENABLE_MARK_OFFENSIVE_FLAGS %}
+        {% if answer.offensive_flag_count > 0 %}
+            <a href="{% url edit_answer answer.id %}" title="{% trans %}permanent link{% endtrans %}" title="{% trans %}remove offensive flag{% endtrans %}" class="control-link" id="answer-offensive-remove-flag-{{ answer.id }}">
+                <i class="control-link-icon icon icon-list round"></i>
+                <span class="control-link-content">
+                    {% trans %}remove flag{% endtrans %}
+                </span>
+            </a>
+            <a href="{% url edit_answer answer.id %}" title="{% trans %}report as offensive (i.e containing spam, advertising, malicious text, etc.){% endtrans %}" class="control-link" id="answer-offensive-flag-{{ answer.id }}" >
+                <i class="control-link-icon icon icon-list round"></i>
+                <span class="control-link-content">
+                    {% trans %}flag offensive{% endtrans %} ({{ answer.offensive_flag_count }})
+                </span>
+            </a>
+        {% else %}
+            <a href="{% url edit_answer answer.id %}" title="{% trans %}report as offensive (i.e containing spam, advertising, malicious text, etc.){% endtrans %}" class="control-link" id="answer-offensive-flag-{{ answer.id }}">
+                <i class="control-link-icon icon icon-list round"></i>
+                <span class="control-link-content">
+                    {% trans %}flag offensive{% endtrans %}
+                </span>
+            </a>
+        {% endif %}
+        {% endif %}
+
+        {# === DISCUSSION reaction === #}
+        {% if thread.has_response_perm(request.user) and answer.thread.is_discussion() %}
+        <a href="#" class="control-link chat js-discussion-reaction" data-html="<p>replyto:#{{ answer.pk }}</p>">
+            <i class="control-link-icon icon icon-list round"></i>
+            <span class="control-link-content">
+                {% trans %}reply{% endtrans %}
+            </span>
+        </a>
+        {% endif %}
+
+    </div>
+</div>
+
+
+
+<div style="display:none!important;">
+
+
 {#<span class="action-link swap-qa">
     <a id="swap-question-with-answer-{{answer.id}}">{% trans %}swap with question{% endtrans %}</a>
 </span>uncomment if needed#}
@@ -87,6 +165,8 @@
     #}
 
 </ul>
+
+</div>
 
 <script type="text/javascript">
     openode['functions']['renderPostControls']('{{ answer.id }}');

@@ -1,11 +1,11 @@
 {% spaceless %}
     {% if p.is_paginated %}
-        <ul class="pagination" style="float:{{ position }}">
+        <ul class="pagination">
 
             {% if p.has_previous %}
-                <li class="arrow">
+                <li class="arrow prev">
                     <a href="{{ p.base_url }}page={{ p.previous }}{{ anchor }}" title="{% trans %}previous{% endtrans %}">
-                        &laquo; {% trans %}previous{% endtrans %}
+                        {% trans %}previous{% endtrans %}
                     </a>
                 </li>
             {% endif %}
@@ -35,9 +35,9 @@
             {% endif %}
 
             {% if p.has_next %}
-                <li class="arrow">
+                <li class="arrow next">
                     <a href="{{ p.base_url }}page={{ p.next }}{{ anchor }}" title="{% trans %}next page{% endtrans %}">
-                        {% trans %}next page{% endtrans %} &raquo;
+                        {% trans %}next page{% endtrans %}
                     </a>
                 </li>
             {% endif %}

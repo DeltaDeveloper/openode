@@ -1,6 +1,6 @@
 // ==========================================================================
 // Title:        Control link
-// ========================================================================== 
+// ==========================================================================
 
 .control-link {
     position: relative;
@@ -9,7 +9,11 @@
 
     & + .control-link {
         padding-left: rem-calc(20px);
-    }    
+    }
+}
+
+a.control-link .control-link-content {
+    text-decoration: underline;
 }
 
 .control-link-icon {
@@ -32,8 +36,6 @@
 .control-link-content {
     position: relative;
     top: rem-calc(-3px);
-
-    text-decoration: underline;
 
     &:hover, &:focus, &:active {
         text-decoration: none;

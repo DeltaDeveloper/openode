@@ -227,4 +227,29 @@ textarea[disabled="disabled"] {
 }
 
 
+// ==========================================================================
+// =select2
+// ==========================================================================
 
+.select2-container.select2-container-multi {
+    width: 140px;
+    height: 34px;
+
+    .select2-choices {
+        height: 34px!important;
+        border-radius: $global-radius;
+    }
+
+
+}
+.select2-results {
+    font-size: 10px!important;
+}
+.select2-results .select2-no-results, .select2-results .select2-searching, .select2-results .select2-selection-limit {
+    font-size: 10px!important;
+}
+@include phone {
+    .select2-container.select2-container-multi {
+        width: 100%;
+    }
+};

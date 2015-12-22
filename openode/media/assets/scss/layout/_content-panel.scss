@@ -72,6 +72,10 @@ $content-panel-header-font-size: rem-calc(12px) !default;
 
 .content-panel-action-area {
     @extend .content-panel-header;
+
+    .pagination {
+        margin: 0;
+    }
 }
 
 .content-panel-control {
@@ -96,8 +100,9 @@ $content-panel-header-font-size: rem-calc(12px) !default;
 .content-panel-content {
     padding: $content-panel-padding;
 
-    h1, h2, h3 {
+    h1, h2, h3, h4, h5 {
         font-size: rem-calc(30px);
+        font-weight: normal;
         line-height: rem-calc(36px);
         color: $primary-color;
 
@@ -105,6 +110,15 @@ $content-panel-header-font-size: rem-calc(12px) !default;
             font-size: 90%;
             color: inherit;
         }
+
+        &.underline {
+            border-bottom: 1px solid $global-border-color;
+            padding-bottom: $global-spacing/2;
+        }
+    }
+
+    .node-title {
+        margin-bottom: $global-spacing;
     }
 }
 

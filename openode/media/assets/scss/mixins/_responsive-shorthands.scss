@@ -26,6 +26,12 @@
     }
 }
 
+@mixin phone-and-tablet {
+    @media #{$small-and-medium} {
+        @content;
+    }
+}
+
 @mixin tablet-and-desktop {
     @media #{$medium-up} {
         @content;
