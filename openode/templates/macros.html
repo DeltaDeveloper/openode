@@ -284,25 +284,22 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
 {%- endmacro %} #}
 {% macro render_user_infobox(user, request_user, label=None, timestamp=None) -%}
 
-
     <div class="content-panel-control content-inline">
         <div class="control-area right">
 
-            <span class="control-link" style="width:32px; height:32px;">
-                <img class="control-link-icon icon icon-list round" style="width:32px; height:32px;" height="32" width="32" src="" alt="" />
+            <span class="control-link has-photo" style="width:32px; height:32px;">
+                
                 <span class="control-link-content">
                     {{ timestamp|humanize_datetime }}
                 </span>
             </span>
 
-            <a href="{{ user.get_profile_url() }}" title="{{ user.screen_name|escape }}" class="control-link avatar" style="width:32px; height:32px;">
+            <a href="{{ user.get_profile_url() }}" title="{{ user.screen_name|escape }}" class="control-link avatar has-photo" style="width:32px; height:32px;">
                 <img class="control-link-icon icon icon-list round" style="width:32px; height:32px;" height="32" width="32" src="{{ user.get_gravatar_url(32) }}" alt="" />
-                <span class="control-link-content">
-                    {{ user_profile_link(user) }}
-                    {% for organization in user.get_organizations() %}
-                        {{ organization_link(organization, request_user, 16, logo_crop=True) }}
-                    {% endfor %}
-                </span>
+                    <span class="control-link-content">
+                    {{ user.screen_name|escape }}
+                    </span>
+               
             </a>
 
         </div>

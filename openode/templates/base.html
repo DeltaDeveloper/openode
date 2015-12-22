@@ -5,7 +5,8 @@
         <title>{% block title %}{% endblock %} | {{ settings.APP_TITLE|escape }}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="keywords" content="{%block keywords%}{%endblock%},{{ settings.APP_KEYWORDS|escape }}" />
-        <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="{{ settings.SITE_FAVICON|media }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% block meta_description %}
             <meta name="description" content="{{settings.APP_DESCRIPTION|escape}}" />
@@ -15,7 +16,7 @@
             <meta name="google-site-verification" content="{{ settings.GOOGLE_SITEMAP_CODE }}" />
         {% endif %}
 
-        <link rel="shortcut icon" href="{{ settings.SITE_FAVICON|media }}" />
+        
 
         {% block before_css %}{% endblock %}
         {% block forestyle %}{% endblock %}

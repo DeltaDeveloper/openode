@@ -79,6 +79,17 @@ module.exports = function(grunt) {
         }
       }
     },
+    cssmin: {
+        target: {
+            files: [{
+                expand: true,
+                cwd: '<%= config.cssPath %>',
+                src: ['*.css', '!*.min.css'],
+                dest: '<%= config.cssPath %>',
+                ext: '.min.css'
+            }]
+        }
+    },
     useminPrepare: {
       html: '../index.html',
       options: {
@@ -156,11 +167,11 @@ module.exports = function(grunt) {
     'sass:dist',
     'autoprefixer:dist',
     'useminPrepare',
-    'concat',
+    //'concat',
     'cssmin',
-    'uglify',
+    // 'uglify',
     //'filerev',
-    'usemin',
+    // 'usemin',
     'copy:cssimages',
     'copy:cssfonts'
   ]);
