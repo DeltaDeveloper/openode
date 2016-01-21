@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets
 
-from openode.models import Node, Thread
+from openode.models import Node, NodeUser, Thread
 from openode import const
 from openode.models.thread import ThreadCategory
 from openode.rest_api import serializers
@@ -15,6 +15,11 @@ class UserViewSet(viewsets.ModelViewSet):
 class NodeViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.DetailNodeSerializer
     model = Node
+
+
+class NodeUserViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.DetailNodeUserSerializer
+    model = NodeUser
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
