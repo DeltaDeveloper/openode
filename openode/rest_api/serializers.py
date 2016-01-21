@@ -4,7 +4,7 @@ from rest_framework import serializers
 from openode.models.post import Post
 from openode.models.thread import (
     ThreadCategory, AttachmentFileNode, AttachmentFileThread)
-from openode.models import Node, Thread, Tag
+from openode.models import Node, NodeUser, Thread, Tag
 from openode.document.models import Document, DocumentRevision
 
 
@@ -42,6 +42,14 @@ class DetailNodeSerializer(serializers.ModelSerializer):
         model = Node
 
 
+class DetailNodeUserSerializer(serializers.ModelSerializer):
+    """
+    Detailed serializer with unpacked data
+    """
+    class Meta:
+        model = NodeUser
+
+
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
@@ -61,6 +69,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     comments = CommentSerializer()
+
     class Meta:
         model = Post
 
@@ -91,15 +100,11 @@ class ThreadSerializer(serializers.ModelSerializer):
     file_documents = FileDocumentSerializer(source='documents')
     posts = PostSerializer()
 
-
     class Meta:
         model = Thread
         exclude = (
             'tagnames'
             'category',
-            'question_flow_state',
-            'question_flow_responsible_user',
-            'question_flow_interviewee_user',
             'approved',
             'accepted_answer',
             'answer_accepted_at',
@@ -161,4 +166,3 @@ class DocumentSerializer(ThreadSerializer):
             'added_at',
             'points',
         )
-
