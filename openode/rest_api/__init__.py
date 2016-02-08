@@ -4,6 +4,7 @@ from openode.rest_api import views
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
+router.register(r'organizations', views.OrganizationViewSet)
 router.register(r'nodes', views.NodeViewSet)
 router.register(r'nodeusers', views.NodeUserViewSet)
 router.register(r'questions', views.QuestionViewSet)
