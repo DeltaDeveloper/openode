@@ -4,7 +4,7 @@ from rest_framework import serializers
 from openode.models.post import Post
 from openode.models.thread import (
     ThreadCategory, AttachmentFileNode, AttachmentFileThread)
-from openode.models import Node, NodeUser, Thread, Tag
+from openode.models import Node, NodeUser, Organization, Thread, Tag
 from openode.document.models import Document, DocumentRevision
 
 
@@ -12,6 +12,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         exclude = ('password', )
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
 
 
 class AttachmentFileNodeSerializer(serializers.ModelSerializer):
